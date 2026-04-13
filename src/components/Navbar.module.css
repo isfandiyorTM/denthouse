@@ -1,0 +1,53 @@
+.nav {
+  background: #0e0e10;
+  border-bottom: 1px solid #1e1e1e;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.logoText {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #fff;
+}
+
+.accent { color: #E8580A; }
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn {
+  background: none;
+  border: 1px solid #2a2a2a;
+  color: #999;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.btn:hover { border-color: #E8580A; color: #E8580A; }
+
+.active { background: #E8580A; border-color: #E8580A; color: #fff; }
+.active:hover { background: #d04e09; border-color: #d04e09; color: #fff; }
+
+.adminBtn { border-color: #E8580A; color: #E8580A; }
+.adminBtn:hover { background: #E8580A; color: #fff; }

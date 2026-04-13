@@ -1,0 +1,101 @@
+.card {
+  background: #141416;
+  border: 1px solid #1e1e1e;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.card:hover { border-color: #E8580A; transform: translateY(-2px); }
+
+/* Thumbnail */
+.thumb {
+  position: relative;
+  background: #0a0a0c;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.catBadge, .baBadge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.catBadge {
+  background: rgba(232,88,10,0.15);
+  color: #E8580A;
+  border: 1px solid rgba(232,88,10,0.3);
+}
+
+.baBadge {
+  background: rgba(255,255,255,0.08);
+  color: #888;
+}
+
+.playBtn {
+  width: 48px;
+  height: 48px;
+  background: rgba(232,88,10,0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 16px;
+  padding-left: 3px;
+}
+
+/* Body */
+.body { padding: 14px; }
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f0f0f0;
+  margin-bottom: 5px;
+  line-height: 1.4;
+}
+
+.model {
+  font-size: 11px;
+  color: #555;
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.dot { color: #E8580A; font-size: 9px; }
+
+.desc {
+  font-size: 12px;
+  color: #666;
+  line-height: 1.5;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 11px;
+  border-top: 1px solid #1e1e1e;
+}
+
+.date  { font-size: 11px; color: #444; }
+.watch { font-size: 12px; color: #E8580A; font-weight: 500; }

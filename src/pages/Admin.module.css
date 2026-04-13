@@ -1,0 +1,170 @@
+/* ── Login ──────────────────────────────────── */
+.loginWrap {
+  max-width: 380px;
+  margin: 70px auto;
+  padding: 20px;
+}
+
+.loginCard {
+  background: #141416;
+  border: 1px solid #1e1e1e;
+  border-radius: 18px;
+  padding: 28px;
+  text-align: center;
+}
+
+.loginIcon { font-size: 32px; margin-bottom: 14px; }
+
+.loginCard h2 { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.loginCard p  { font-size: 13px; color: #555; margin-bottom: 20px; }
+
+.hint { margin-top: 14px; font-size: 11px; color: #333; }
+
+/* ── Dashboard ───────────────────────────────── */
+.wrap { max-width: 760px; margin: 0 auto; padding: 36px 20px; }
+
+.pageHeader { margin-bottom: 28px; }
+.pageHeader h2 { font-size: 22px; font-weight: 700; color: #fff; }
+.pageHeader p  { font-size: 13px; color: #555; margin-top: 5px; }
+
+.pill {
+  display: inline-block;
+  background: rgba(232,88,10,0.12);
+  color: #E8580A;
+  border: 1px solid rgba(232,88,10,0.2);
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+/* ── Form card ───────────────────────────────── */
+.formCard {
+  background: #141416;
+  border: 1px solid #1e1e1e;
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 28px;
+}
+
+.formCard h3 { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 18px; }
+
+.msg {
+  padding: 9px 14px;
+  border-radius: 7px;
+  font-size: 12px;
+  margin-bottom: 14px;
+}
+.ok { background: rgba(34,197,94,0.1);  color: #4ade80; border: 1px solid rgba(34,197,94,0.2);  }
+.er { background: rgba(239,68,68,0.1);  color: #f87171; border: 1px solid rgba(239,68,68,0.2);  }
+
+.row2  { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.field { margin-bottom: 14px; }
+
+.label {
+  display: block;
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  background: #0e0e10;
+  border: 1px solid #222;
+  color: #f0f0f0;
+  padding: 10px 13px;
+  border-radius: 8px;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+.input:focus       { border-color: #E8580A; }
+.input::placeholder { color: #333; }
+
+.btnRow { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+
+.submitBtn {
+  background: #E8580A;
+  border: none;
+  color: #fff;
+  padding: 11px 24px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.submitBtn:hover { background: #d04e09; }
+
+.cancelBtn {
+  background: #1e1e1e;
+  border: none;
+  color: #888;
+  padding: 11px 18px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.cancelBtn:hover { background: #2a2a2a; color: #fff; }
+
+/* ── Video list ──────────────────────────────── */
+.listTitle {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 14px;
+}
+
+.list { display: flex; flex-direction: column; gap: 10px; }
+
+.listItem {
+  background: #141416;
+  border: 1px solid #1e1e1e;
+  border-radius: 11px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.listIcon {
+  width: 38px;
+  height: 38px;
+  background: #0e0e10;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.listInfo  { flex: 1; min-width: 0; }
+.listName  { font-size: 13px; font-weight: 500; color: #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.listMeta  { font-size: 11px; color: #444; margin-top: 3px; }
+
+.iconBtn {
+  background: none;
+  border: 1px solid #222;
+  color: #777;
+  padding: 5px 11px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 11px;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.iconBtn:hover { border-color: #E8580A; color: #E8580A; }
+
+.delBtn:hover  { border-color: #ef4444; color: #ef4444; }
+
+/* ── Responsive ──────────────────────────────── */
+@media (max-width: 520px) { .row2 { grid-template-columns: 1fr; } }
