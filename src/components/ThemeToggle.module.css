@@ -10,3 +10,7 @@
 .button:hover { background: var(--nav-hover, var(--bg-alt)); color: var(--nav-fg-strong, var(--text)); }
 .button svg { transition: transform 0.5s var(--ease); }
 .button:hover svg { transform: rotate(-25deg); }
+
+@media (max-width: 420px) {
+  .button { width: 36px; }
+}

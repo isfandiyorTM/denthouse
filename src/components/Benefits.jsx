@@ -1,11 +1,10 @@
-import { ShieldCheck, Timer, Truck, Wallet } from "lucide-react";
-import { BUSINESS } from "../data/business";
+import { ShieldCheck, Timer, Truck } from "lucide-react";
 import { useI18n } from "../i18n/context";
 import styles from "./Benefits.module.css";
 
 export default function Benefits() {
   const { t } = useI18n();
-  const icons = [ShieldCheck, Timer, BUSINESS.mobileService ? Truck : Wallet];
+  const icons = [ShieldCheck, Timer, Truck];
 
   return (
     <section className={styles.section} data-track="benefits">

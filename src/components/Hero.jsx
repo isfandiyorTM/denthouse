@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronDown, Pause, Phone, Play } from "lucide-react";
 import { BUSINESS } from "../data/business";
 import { HERO_SLIDES, SLIDE_MS, SLIDE_SIZES, slideSrc, slideSrcSet } from "../data/heroSlides";
-import { areaName } from "../i18n";
 import { useI18n } from "../i18n/context";
 import { cx, hoursRows, telLink, waLink, yearsOfExperience } from "../lib/helpers";
 import OpenStatus from "./OpenStatus";
@@ -110,7 +109,7 @@ function useSlideshow(sectionRef) {
 }
 
 export default function Hero() {
-  const { lang, t } = useI18n();
+  const { t } = useI18n();
   const firstHours = hoursRows(t)[0];
   const sectionRef = useRef(null);
   const mediaRef = useRef(null);
@@ -169,7 +168,7 @@ export default function Hero() {
 
       <div className={`container ${styles.inner}`}>
         <p className={styles.meta}>
-          <span>{areaName(lang)}{lang === "ar" ? "، " : ", "}{t.city}</span>
+          <span>{t.hero.where}</span>
           <span className={styles.sep} aria-hidden="true" />
           <OpenStatus fallback={`${firstHours.label} ${firstHours.value}`} />
         </p>

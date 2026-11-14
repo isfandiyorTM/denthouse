@@ -1,4 +1,4 @@
-# DentHouse — Paintless Dent Repair, Dubai
+# PDR Experts UAE — Mobile Paintless Dent Repair, Dubai & Sharjah
 
 Landing page for a paintless dent repair (PDR) business in Dubai. It's a single fast page,
 prerendered to static HTML so Google can read every word. It's built to turn visitors
@@ -22,7 +22,7 @@ Google structured data are all generated from it.
 | What | Where | Notes |
 |---|---|---|
 | Name, phone, WhatsApp, email | `business.js` → `contact` | WhatsApp = digits only, e.g. `971501234567` |
-| Workshop address + map pin | `business.js` → `address`, `geo` | Right-click the pin in Google Maps to copy coordinates |
+| Service area | `business.js` → `serviceCities` + text in `src/i18n/*.js` | Mobile only (no workshop): Dubai and Sharjah |
 | Opening hours | `business.js` → `hours` | Drives the live "Open now / Closed" badge (Dubai time) |
 | Master's name and photo | `business.js` → `owner` | Put the photo in `public/images/`. A real photo builds trust. |
 | His bio, role, skills | each language file → `about` | See *Languages* below |
@@ -32,7 +32,6 @@ Google structured data are all generated from it.
 | Domain | `business.js` → `siteUrl` | Used for canonical URL, sitemap, link previews |
 | Real reviews | [`src/data/reviews.js`](src/data/reviews.js) | Copy real Google reviews only, never write your own |
 | Areas served | [`src/data/areas.js`](src/data/areas.js) | English + Arabic names |
-| Workshop area in other languages | `business.js` → `address.areaLocal` | e.g. القوز for Al Quoz |
 
 > Keep the name, address and phone **identical** to the Google Business Profile, character for
 > character. Google uses that consistency to trust a local business.

@@ -76,3 +76,12 @@
 @media (max-width: 480px) {
   .waText { display: none; }
 }
+
+/* Small phones: tighten the header so the full name + 3 buttons fit */
+@media (max-width: 420px) {
+  .bar { gap: 10px; }
+  .logo { gap: 8px; font-size: 15.5px; white-space: nowrap; }
+  .logo svg { width: 24px; height: 24px; }
+  .actions { gap: 0; }
+  .actions :global(.btn) { padding: 0 12px; }
+}

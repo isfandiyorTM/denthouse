@@ -1,5 +1,4 @@
 import { MapPin } from "lucide-react";
-import { BUSINESS } from "../data/business";
 import { areasFor } from "../data/areas";
 import { useI18n } from "../i18n/context";
 import styles from "./AreasMarquee.module.css";
@@ -8,7 +7,7 @@ import styles from "./AreasMarquee.module.css";
 export default function AreasMarquee() {
   const { lang, t } = useI18n();
   const areas = areasFor(lang);
-  const label = BUSINESS.mobileService ? t.marquee.mobile : t.marquee.static;
+  const label = t.marquee.label;
 
   return (
     <section className={styles.band} aria-label={label}>

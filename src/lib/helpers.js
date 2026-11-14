@@ -20,21 +20,6 @@ export function waLink(text = "") {
 export const telLink = `tel:${BUSINESS.contact.phone}`;
 export const mailLink = `mailto:${BUSINESS.contact.email}`;
 
-export function directionsUrl() {
-  if (BUSINESS.googleMapsUrl) return BUSINESS.googleMapsUrl;
-  const { lat, lng } = BUSINESS.geo;
-  return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-}
-export function mapEmbedUrl() {
-  const { lat, lng } = BUSINESS.geo;
-  return `https://www.google.com/maps?q=${lat},${lng}&z=14&output=embed`;
-}
-
-export function fullAddress() {
-  const { street, city } = BUSINESS.address;
-  return `${street}, ${city}, UAE`;
-}
-
 export function yearsOfExperience(now = new Date()) {
   return Math.max(1, now.getFullYear() - BUSINESS.foundedYear);
 }
@@ -58,10 +43,13 @@ export function hoursGroups(hours = BUSINESS.hours) {
   return groups;
 }
 
-/** Human-readable rows: [{ label: "Mon – Sat", value: "8 am – 6 pm" }] */
+/** Human-readable rows: [{ label: "Mon – Sat", value: "8 am – 6 pm" }], or "Every day" when all 7 match. */
 export function hoursRows(t) {
   return hoursGroups().map(({ days, hours }) => ({
-    label: days.length > 1 ? `${t.days[days[0]]} – ${t.days[days[days.length - 1]]}` : t.days[days[0]],
+    label:
+      days.length === 7 ? t.everyDay
+      : days.length > 1 ? `${t.days[days[0]]} – ${t.days[days[days.length - 1]]}`
+      : t.days[days[0]],
     value: hours ? `${formatTime(hours[0], t)} – ${formatTime(hours[1], t)}` : t.closedDay,
   }));
 }

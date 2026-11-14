@@ -1,12 +1,13 @@
-import { Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { BUSINESS } from "../data/business";
 import { areasFor } from "../data/areas";
 import { useI18n } from "../i18n/context";
-import { directionsUrl, fullAddress, hoursRows, mailLink, mapEmbedUrl, telLink, waLink } from "../lib/helpers";
+import { hoursRows, mailLink, telLink, waLink } from "../lib/helpers";
 import OpenStatus from "./OpenStatus";
 import { WhatsAppIcon } from "./icons";
 import styles from "./Contact.module.css";
 
+/** Mobile service: no workshop address or map — we show where he goes instead. */
 export default function Contact() {
   const { lang, t } = useI18n();
   const { contact } = BUSINESS;
@@ -31,16 +32,18 @@ export default function Contact() {
                 {c.call}
               </a>
             </div>
+          </div>
 
-            <dl className={styles.details}>
+          <dl className={styles.card} data-reveal="scale" style={{ "--d": 2 }}>
+            <div className={styles.row}>
+              <MapPin size={18} aria-hidden="true" />
               <div>
-                <dt>{c.workshop}</dt>
-                <dd>
-                  {/* Address stays in English — it must match Google Maps exactly. */}
-                  <address dir="ltr" lang="en">{BUSINESS.legalName}<br />{fullAddress()}</address>
-                  <a className="text-link" href={directionsUrl()} target="_blank" rel="noopener noreferrer">{c.directions}</a>
-                </dd>
+                <dt>{c.area}</dt>
+                <dd>{c.areaValue}</dd>
               </div>
+            </div>
+            <div className={styles.row}>
+              <Clock size={18} aria-hidden="true" />
               <div>
                 <dt>{c.hours}</dt>
                 <dd>
@@ -52,25 +55,26 @@ export default function Contact() {
                   <OpenStatus className={styles.status} />
                 </dd>
               </div>
+            </div>
+            <div className={styles.row}>
+              <Phone size={18} aria-hidden="true" />
               <div>
                 <dt>{c.phone}</dt>
                 <dd><a href={telLink} dir="ltr">{contact.phoneDisplay}</a></dd>
               </div>
+            </div>
+            <div className={styles.row}>
+              <Mail size={18} aria-hidden="true" />
               <div>
                 <dt>{c.email}</dt>
                 <dd><a href={mailLink} dir="ltr">{contact.email}</a></dd>
               </div>
-            </dl>
-          </div>
-
-          <div className={styles.map} data-reveal="scale" style={{ "--d": 2 }}>
-            <iframe src={mapEmbedUrl()} title={c.map} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-          </div>
+            </div>
+          </dl>
         </div>
 
         <p className={styles.areas} data-reveal>
-          <strong>{c.areasLabel}</strong>{" "}
-          {BUSINESS.mobileService ? c.areasMobile : c.areasStatic}{" "}
+          <strong>{c.areasLabel}</strong> {c.areasText}{" "}
           {areasFor(lang).join(lang === "ar" ? "، " : ", ")}.
         </p>
       </div>

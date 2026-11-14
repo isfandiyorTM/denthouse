@@ -45,21 +45,19 @@ function businessSchema(lang, t) {
     currenciesAccepted: "AED",
     foundingDate: String(B.foundedYear),
     availableLanguage: LANGS.map((l) => l.code),
+    // Mobile service ("service-area business"): city only, no street address or map pin.
     address: {
       "@type": "PostalAddress",
-      streetAddress: B.address.street,
       addressLocality: B.address.city,
       addressRegion: B.address.region,
       addressCountry: B.address.country,
     },
-    geo: { "@type": "GeoCoordinates", latitude: B.geo.lat, longitude: B.geo.lng },
-    hasMap: B.googleMapsUrl || `https://www.google.com/maps?q=${B.geo.lat},${B.geo.lng}`,
+    hasMap: B.googleMapsUrl || undefined,
     openingHoursSpecification: hoursSchema(),
     areaServed: [
-      { "@type": "City", name: t.city },
-      ...areasFor(lang).map((name) => ({ "@type": "Place", name: `${name}, ${t.city}` })),
+      ...B.serviceCities.map((name) => ({ "@type": "City", name })),
+      ...areasFor(lang).map((name) => ({ "@type": "Place", name })),
     ],
-    founder: { "@type": "Person", name: B.owner.name, jobTitle: t.about.role },
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: t.services.title,
@@ -70,7 +68,7 @@ function businessSchema(lang, t) {
           name: s.title,
           description: s.text,
           serviceType: "Paintless dent repair",
-          areaServed: { "@type": "City", name: t.city },
+          areaServed: B.serviceCities.map((name) => ({ "@type": "City", name })),
         },
       })),
     },
@@ -186,8 +184,6 @@ export function buildHead(lang = DEFAULT_LANG) {
     // Local signals
     `<meta name="geo.region" content="AE-DU" />`,
     `<meta name="geo.placename" content="Dubai" />`,
-    `<meta name="geo.position" content="${B.geo.lat};${B.geo.lng}" />`,
-    `<meta name="ICBM" content="${B.geo.lat}, ${B.geo.lng}" />`,
 
     // Link previews (WhatsApp, Instagram, Facebook, X, iMessage)
     `<meta property="og:type" content="website" />`,

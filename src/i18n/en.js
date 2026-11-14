@@ -1,16 +1,15 @@
 // English — the main version of the site (served at "/").
 // Each language file has exactly the same shape. Values that are functions
 // receive data (names, numbers) and return text.
-// `area` = workshop neighbourhood, `mobile` = whether we drive to customers.
-export default ({ name, area, mobile }) => ({
+export default ({ name }) => ({
   city: "Dubai",
   skip: "Skip to content",
 
   seo: {
-    title: `Paintless Dent Repair Dubai | PDR & Dent Removal | ${name}`,
+    title: `Mobile Paintless Dent Repair in Dubai & Sharjah | ${name}`,
     description:
-      `Paintless dent repair (PDR) in Dubai. Door dings, creases and hail damage removed with no paint or filler. ` +
-      `Workshop in ${area}${mobile ? " + mobile service" : ""}. WhatsApp a photo for a free quote.`,
+      "Mobile paintless dent repair (PDR) in Dubai and Sharjah. We come to your home, office or parking and remove door dings, " +
+      "body dents, minor creases and hail damage without repainting. WhatsApp a photo for a free quote.",
   },
 
   nav: {
@@ -27,7 +26,8 @@ export default ({ name, area, mobile }) => ({
 
   hero: {
     title: "Paintless dent repair in Dubai",
-    lead: "We remove dents from your car without paint or filler. Your original paint stays, and most repairs are done the same day.",
+    lead: "We come to your home, office or parking and remove dents without repainting. Your original paint stays, and most repairs take 1–3 hours.",
+    where: "Mobile service · Dubai & Sharjah",
     cta: "Send a photo on WhatsApp",
     note: "Free quote. Send a photo of the dent and we'll reply with a price.",
     stats: { years: "years of experience", paint: "original paint kept", time: "typical repair", timeValue: "1–3 h" },
@@ -35,14 +35,12 @@ export default ({ name, area, mobile }) => ({
     slides: { label: "Background photos", photo: (i, n) => `Photo ${i} of ${n}`, pause: "Pause slideshow", play: "Play slideshow" },
   },
 
-  marquee: { mobile: "We come to you in", static: "Our customers come from" },
+  marquee: { label: "We come to you in" },
 
   benefits: [
-    { title: "Original paint stays", text: "No filler and no repainting, so your car keeps its value." },
-    { title: "Done in hours", text: "Most dents are fixed the same day, often while you wait." },
-    mobile
-      ? { title: "We come to you", text: `Anywhere in Dubai, or at our workshop in ${area}.` }
-      : { title: "Fair price", text: "No paint or parts to pay for. Send a photo for a free quote." },
+    { title: "Original paint stays", text: "No filler and no repainting, so your car keeps its value, and it usually costs less than a body shop." },
+    { title: "Done in 1–3 hours", text: "Most repairs are finished in 1 to 3 hours, often while you wait." },
+    { title: "We come to you", text: "Home, office or parking, anywhere in Dubai and Sharjah." },
   ],
 
   work: {
@@ -62,11 +60,11 @@ export default ({ name, area, mobile }) => ({
     unsure: ["Not sure?", "Send us a photo", "and we'll tell you honestly."],
     items: [
       { id: "door-dings", title: "Door dings", text: "Small dents from car parks and car doors. Usually fixed while you wait." },
+      { id: "body-dents", title: "Body dents", text: "Dents on doors, fenders, bonnet and roof, pushed out from behind the panel." },
       { id: "hail", title: "Hail damage", text: "Many small dents on the roof, bonnet and boot after a storm." },
-      { id: "creases", title: "Creases and large dents", text: "Sharp lines and bigger dents on doors, fenders and side panels." },
-      { id: "bumpers", title: "Bumper dents", text: "Pushed-in plastic bumpers reshaped with heat. No new part needed." },
+      { id: "creases", title: "Minor creases", text: "Small sharp lines and creases on body panels." },
       { id: "lease-return", title: "Before lease return or sale", text: "Remove dents before the inspection and avoid damage charges." },
-      { id: "mobile", mobileOnly: true, title: "Mobile service", text: "We come to your home or office anywhere in Dubai." },
+      { id: "mobile", title: "Mobile service", text: "We come to your home, office or parking anywhere in Dubai and Sharjah." },
     ],
   },
 
@@ -76,7 +74,7 @@ export default ({ name, area, mobile }) => ({
     steps: [
       { title: "Send a photo", text: "Take a photo of the dent and send it to us on WhatsApp." },
       { title: "Get a price", text: "We reply with a price and how long it will take. No obligation." },
-      { title: "We fix it", text: mobile ? `At our workshop in ${area} or at your location.` : `At our workshop in ${area}.` },
+      { title: "We fix it", text: "At your home, office or parking. All we need is a little space next to the car." },
     ],
   },
 
@@ -84,8 +82,9 @@ export default ({ name, area, mobile }) => ({
     label: "About",
     // TODO: rewrite with him, in his own words.
     role: "Owner and PDR technician",
+    yearsLabel: "years of experience in the UAE",
     bio: [
-      "I have been repairing dents without paint for years. I work from behind the panel with special tools and slowly push the metal back into shape, so the original paint is never touched.",
+      "I have been repairing dents without paint in the UAE for more than 10 years. I work from behind the panel with special tools and slowly push the metal back into shape, so the original paint is never touched.",
       "If a dent can't be fixed this way, I'll tell you before any work starts.",
     ],
     // Only list things that are true. TODO: confirm.
@@ -105,10 +104,10 @@ export default ({ name, area, mobile }) => ({
     title: "Common questions",
     items: [
       { q: "What is paintless dent repair?", a: "It is a way to remove dents without filler or paint. We push the metal back into shape from behind the panel, so the original paint is never touched." },
-      { q: "How much does it cost?", a: "It depends on the size of the dent and where it is. Send a photo on WhatsApp and we'll give you a price. It's free and there's no obligation." },
+      { q: "How much does it cost?", a: "It depends on the size of the dent and where it is, and it is usually cheaper than a body shop. Send a photo on WhatsApp and we'll give you a price. It's free and there's no obligation." },
       { q: "Can every dent be fixed?", a: "Most dents can, as long as the paint is not cracked. If yours can't, we'll tell you before we start." },
-      { q: "How long does it take?", a: "Most dents take 30 minutes to 3 hours. Hail damage can take one to three days." },
-      { mobileOnly: true, q: "Do you come to my location?", a: `Yes. We come to homes and offices anywhere in Dubai. Big jobs like hail damage are done at our workshop in ${area}.` },
+      { q: "How long does it take?", a: "Most repairs take 1 to 3 hours. Large hail damage can take longer." },
+      { q: "Do you come to my location?", a: "Yes, we are a mobile service. We come to homes, offices and parking areas anywhere in Dubai and Sharjah." },
       { q: "Can you fix dents before I return a leased car?", a: "Yes. It is usually much cheaper than the damage charge at the return inspection." },
     ],
   },
@@ -119,18 +118,16 @@ export default ({ name, area, mobile }) => ({
     lead: "Send a photo of the dent on WhatsApp and we'll reply with a price.",
     whatsapp: "WhatsApp us",
     call: "Call us",
-    workshop: "Workshop",
-    directions: "Get directions",
+    area: "Service area",
+    areaValue: "All of Dubai and Sharjah. We come to you.",
     hours: "Opening hours",
     phone: "Phone",
     email: "Email",
     areasLabel: "Areas we cover:",
-    areasMobile: "we come to you anywhere in Dubai, including",
-    areasStatic: "customers come to us from all over Dubai, including",
-    map: `Map showing ${name} in ${area}, Dubai`,
+    areasText: "we come to you anywhere in Dubai and Sharjah, including",
   },
 
-  footer: { tagline: "Paintless dent repair in Dubai", languages: "Languages" },
+  footer: { tagline: "Mobile paintless dent repair in Dubai & Sharjah", languages: "Languages" },
 
   modal: {
     close: "Close video",
@@ -153,6 +150,7 @@ export default ({ name, area, mobile }) => ({
   },
   days: { Mo: "Mon", Tu: "Tue", We: "Wed", Th: "Thu", Fr: "Fri", Sa: "Sat", Su: "Sun" },
   closedDay: "Closed",
+  everyDay: "Every day",
   time: (h, m) => `${h % 12 === 0 ? 12 : h % 12}${m ? `:${String(m).padStart(2, "0")}` : ""} ${h >= 12 ? "pm" : "am"}`,
 
   wa: {

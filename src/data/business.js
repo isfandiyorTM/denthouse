@@ -2,31 +2,31 @@
  * ─────────────────────────────────────────────────────────────────────────
  *  BUSINESS INFO — the ONE place to edit the company's details.
  *
- *  Everything reads from this file: page text, the WhatsApp / call
- *  buttons, the map, opening hours, and the structured data (JSON-LD)
- *  that tells Google "this is a dent-repair business in Dubai".
+ *  Everything reads from this file: the WhatsApp / call buttons, opening
+ *  hours, and the structured data (JSON-LD) that tells Google "this is a
+ *  dent-repair business in Dubai". Page TEXT lives in src/i18n/*.js.
  *
- *  ⚠ Keep name, address and phone IDENTICAL to the Google Business Profile
+ *  ⚠ Keep name and phone IDENTICAL to the Google Business Profile
  *    (character for character). That consistency is a local-ranking signal.
  *
- *  Every value marked  TODO  is a placeholder — replace before going live.
+ *  Values marked TODO are still missing.
  * ─────────────────────────────────────────────────────────────────────────
  */
 export const BUSINESS = {
-  name: "DentHouse",
-  // Full trading name as shown on the Google Business Profile.
-  legalName: "DentHouse Paintless Dent Repair", // TODO
+  name: "PDR Experts UAE",
+  // Full trading name as on the trade license / Google Business Profile.
+  legalName: "PDR Experts UAE",
   // Live domain, https, no trailing slash. Used for canonical URL, sitemap, social previews.
   // On Netlify this is detected automatically (its URL variable = the custom domain once
   // one is connected, otherwise the .netlify.app address). The fallback is used elsewhere.
   siteUrl:
     (typeof process !== "undefined" && process.env && process.env.URL) ||
-    "https://denthouse.ae", // TODO: fallback for non-Netlify builds
-  // Year he started doing PDR — the site shows "N+ years" from this.
-  foundedYear: 2015, // TODO
+    "https://www.example.com", // TODO: real domain, for builds outside Netlify
+  // "More than 10 years of experience in the UAE" (Nov 2026) — the site shows "N+ years".
+  foundedYear: 2016,
 
   owner: {
-    name: "Master Name", // TODO: his real name
+    name: "Master Dent Repair", // how he wants to be shown on the site
     // Put a photo in /public/images and set e.g. "/images/master.jpg". A real
     // photo of him at work builds more trust than anything else on the page.
     photo: null, // TODO
@@ -35,42 +35,36 @@ export const BUSINESS = {
   },
 
   contact: {
-    phone: "+971500000000", // TODO: international format, no spaces
-    phoneDisplay: "+971 50 000 0000", // TODO: how it is shown on the page
-    whatsapp: "971500000000", // TODO: digits only, country code first
-    email: "info@denthouse.ae", // TODO
+    phone: "+971551704343",
+    phoneDisplay: "+971 55 170 4343",
+    whatsapp: "971551704343", // same number as the phone
+    email: "denthousepdr@gmail.com", // he may switch to uaedentspecialist@gmail.com
   },
 
-  address: {
-    street: "Al Quoz Industrial Area 3", // TODO: warehouse / unit number + street
-    area: "Al Quoz", // TODO: neighbourhood — used in headings ("workshop in Al Quoz")
-    // The same neighbourhood written in the other site languages (English is used if missing).
-    areaLocal: { ar: "القوز", ru: "Аль-Куоз", hi: "अल क़ूज़" }, // TODO: update with `area`
-    city: "Dubai",
-    region: "Dubai",
-    country: "AE",
-  },
-  // TODO: in Google Maps right-click the workshop pin → click the coordinates to copy.
-  geo: { lat: 25.1365, lng: 55.2337 },
-  // TODO: Google Business Profile → Share → copy link. Used for "Get directions" + reviews.
+  // Mobile service only — he drives to the customer (home, office or parking),
+  // there is no workshop to visit. Google calls this a "service-area business":
+  // no street address is published, only the areas served.
+  // The page text ("Dubai and Sharjah") is in src/i18n/*.js; neighbourhoods in data/areas.js.
+  serviceCities: ["Dubai", "Sharjah"],
+  address: { city: "Dubai", region: "Dubai", country: "AE" },
+
+  // TODO: Google Business Profile → Share → copy link (used for "All reviews on Google").
   googleMapsUrl: null,
   // TODO: Google Business Profile → "Ask for reviews" link (https://g.page/r/…/review).
   googleReviewUrl: null,
 
   // Opening hours (24h). null = closed. Days: Mo Tu We Th Fr Sa Su.
   hours: {
-    Mo: ["08:00", "18:00"], // TODO
-    Tu: ["08:00", "18:00"],
-    We: ["08:00", "18:00"],
-    Th: ["08:00", "18:00"],
-    Fr: ["08:00", "18:00"],
-    Sa: ["08:00", "18:00"],
-    Su: null,
+    Mo: ["09:00", "18:00"],
+    Tu: ["09:00", "18:00"],
+    We: ["09:00", "18:00"],
+    Th: ["09:00", "18:00"],
+    Fr: ["09:00", "18:00"],
+    Sa: ["09:00", "18:00"],
+    Su: ["09:00", "18:00"],
   },
   timeZone: "Asia/Dubai",
 
-  // Does he drive to the customer? Turns the "mobile service" copy on/off.
-  mobileService: true, // TODO: confirm
   // Rough price level for Google ("$", "$$", "$$$" or e.g. "AED 150–3000").
   priceRange: "$$",
 
@@ -83,13 +77,13 @@ export const BUSINESS = {
   // Full profile URLs. null = hidden. These also go into Google's "sameAs" data,
   // which links the profiles to this business.
   social: {
-    instagram: null, // TODO e.g. "https://www.instagram.com/denthouse.ae"
+    instagram: null, // TODO
     tiktok: null,
     youtube: null,
     facebook: null,
   },
 
-  // Google Analytics 4 measurement ID ("G-XXXXXXXXXX"). Tracks calls, WhatsApp
-  // clicks and quote requests so you can see what brings customers. null = off.
+  // Google Analytics 4 measurement ID ("G-XXXXXXXXXX"). Tracks calls and WhatsApp
+  // clicks so you can see what brings customers. null = off.
   analytics: { gaMeasurementId: null },
 };

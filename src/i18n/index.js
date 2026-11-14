@@ -26,20 +26,9 @@ export function langFromPath(pathname = "/") {
   return seg && seg !== DEFAULT_LANG && FACTORIES[seg] ? seg : DEFAULT_LANG;
 }
 
-/** Workshop neighbourhood name in the given language (falls back to English). */
-export function areaName(lang) {
-  return BUSINESS.address.areaLocal?.[lang] || BUSINESS.address.area;
-}
-
 /** All text for one language. */
 export function getT(lang) {
-  if (!cache[lang]) {
-    const mobile = BUSINESS.mobileService;
-    const t = (FACTORIES[lang] ?? FACTORIES.en)({ name: BUSINESS.name, area: areaName(lang), mobile });
-    t.services.items = t.services.items.filter((i) => mobile || !i.mobileOnly);
-    t.faq.items = t.faq.items.filter((i) => mobile || !i.mobileOnly);
-    cache[lang] = t;
-  }
+  if (!cache[lang]) cache[lang] = (FACTORIES[lang] ?? FACTORIES.en)({ name: BUSINESS.name });
   return cache[lang];
 }
 

@@ -333,3 +333,9 @@
 @media (max-width: 720px) and (max-height: 600px) {
   .stats { display: none; }
 }
+
+/* Small phones: the location pill may wrap to two lines — drop the divider so no line dangles */
+@media (max-width: 420px) {
+  .sep { display: none; }
+  .meta { padding-inline: 14px; }
+}

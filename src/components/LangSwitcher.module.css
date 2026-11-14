@@ -42,3 +42,7 @@
 }
 .menu a:hover { background: var(--bg-alt); color: var(--text); }
 .menu a[aria-current] { color: var(--text); font-weight: 600; }
+
+@media (max-width: 420px) {
+  .button { padding: 0 8px; gap: 4px; }
+}
