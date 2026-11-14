@@ -208,6 +208,7 @@ export function buildHead(lang = DEFAULT_LANG) {
     `<meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />`,
     themeScript,
     `<meta name="format-detection" content="telephone=yes" />`,
+    `<link rel="icon" href="/favicon.ico" sizes="32x32" />`,
     `<link rel="icon" href="/favicon.svg" type="image/svg+xml" />`,
     `<link rel="apple-touch-icon" href="/apple-touch-icon.png" />`,
     `<link rel="manifest" href="/site.webmanifest" />`,
@@ -265,7 +266,7 @@ Sitemap: ${B.siteUrl}/sitemap.xml
 export function buildManifest() {
   return JSON.stringify(
     {
-      name: `${B.name} — Paintless Dent Repair Dubai`,
+      name: `${B.name} — Dubai & Sharjah`,
       short_name: B.name,
       start_url: "/",
       display: "standalone",

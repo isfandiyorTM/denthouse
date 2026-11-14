@@ -3,7 +3,7 @@ import { LANGS } from "../i18n";
 import { useI18n } from "../i18n/context";
 import { mailLink, telLink, waLink } from "../lib/helpers";
 import { rememberLang } from "./LangSwitcher";
-import { Logo } from "./Navbar";
+import BrandLogo from "./BrandLogo";
 import { SOCIAL_ICONS } from "./icons";
 import styles from "./Footer.module.css";
 
@@ -15,7 +15,7 @@ export default function Footer() {
     <footer className={styles.footer} data-track="footer">
       <div className={`container ${styles.inner}`}>
         <div>
-          <Logo />
+          <BrandLogo className={styles.logo} />
           <p className={styles.tag}>{t.footer.tagline}</p>
         </div>
 

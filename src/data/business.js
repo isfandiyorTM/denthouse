@@ -13,9 +13,9 @@
  * ─────────────────────────────────────────────────────────────────────────
  */
 export const BUSINESS = {
-  name: "PDR Experts UAE",
+  name: "Master Dent Repair",
   // Full trading name as on the trade license / Google Business Profile.
-  legalName: "PDR Experts UAE",
+  legalName: "Master Dent Repair",
   // Live domain, https, no trailing slash. Used for canonical URL, sitemap, social previews.
   // On Netlify this is detected automatically (its URL variable = the custom domain once
   // one is connected, otherwise the .netlify.app address). The fallback is used elsewhere.
@@ -26,7 +26,7 @@ export const BUSINESS = {
   foundedYear: 2016,
 
   owner: {
-    name: "Master Dent Repair", // how he wants to be shown on the site
+    name: null, // TODO: his personal name, if he wants it shown (the About section uses the business name until then)
     // Put a photo in /public/images and set e.g. "/images/master.jpg". A real
     // photo of him at work builds more trust than anything else on the page.
     photo: null, // TODO

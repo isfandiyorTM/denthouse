@@ -192,7 +192,7 @@
 }
 .ctas :global(.btn) { height: clamp(44px, 6.6svh, 52px); }
 .primary { background: #fff; color: #111; }
-.primary:hover { background: #fff; box-shadow: 0 12px 32px -8px rgba(232, 88, 10, 0.55); }
+.primary:hover { background: #fff; box-shadow: 0 12px 32px -8px rgba(217, 181, 106, 0.6); }
 .glass {
   color: #fff;
   background: rgba(255, 255, 255, 0.1);
@@ -233,7 +233,7 @@
   height: 3px;
   margin-top: clamp(4px, 0.8svh, 8px);
   border-radius: 2px;
-  background: #e8580a;
+  background: #d9b56a;
 }
 .stats dt { margin-top: 6px; font-size: 13.5px; line-height: 1.3; color: rgba(255, 255, 255, 0.7); }
 

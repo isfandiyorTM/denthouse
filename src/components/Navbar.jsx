@@ -1,22 +1,13 @@
-import { BUSINESS } from "../data/business";
 import { cx, waLink } from "../lib/helpers";
 import { useScrolledPast } from "../hooks/useScroll";
 import { useI18n } from "../i18n/context";
+import BrandLogo from "./BrandLogo";
 import LangSwitcher from "./LangSwitcher";
 import ThemeToggle from "./ThemeToggle";
-import { LogoMark, WhatsAppIcon } from "./icons";
+import { WhatsAppIcon } from "./icons";
 import styles from "./Navbar.module.css";
 
 const LINKS = ["work", "services", "about", "faq", "contact"];
-
-export function Logo() {
-  return (
-    <span className={styles.logo}>
-      <LogoMark size={28} />
-      {BUSINESS.name}
-    </span>
-  );
-}
 
 export default function Navbar() {
   const { t } = useI18n();
@@ -26,7 +17,7 @@ export default function Navbar() {
     <header className={cx(styles.header, scrolled ? styles.scrolled : styles.onHero)} data-track="navbar">
       <div className={cx("container", styles.bar)}>
         <a href="#top" className={styles.home} aria-label={t.nav.home}>
-          <Logo />
+          <BrandLogo className={styles.logo} />
         </a>
         <nav className={styles.links} aria-label="Main">
           {LINKS.map((id) => (

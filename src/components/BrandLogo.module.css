@@ -1,0 +1,27 @@
+.logo {
+  --logo-h: 15px; /* height of the "MASTER DENT" capitals */
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--logo-h) * 0.7);
+  line-height: 0;
+}
+.mark {
+  width: calc(var(--logo-h) * 2.55);
+  height: auto;
+  flex-shrink: 0;
+}
+.words {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--logo-h) * var(--gap));
+}
+.line1,
+.line2 {
+  display: block;
+  width: auto;
+}
+.line1 { height: var(--logo-h); }
+.line2 {
+  height: calc(var(--logo-h) * var(--r2));
+  color: var(--logo-gold, var(--accent));
+}

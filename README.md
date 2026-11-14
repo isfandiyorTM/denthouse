@@ -1,4 +1,4 @@
-# PDR Experts UAE — Mobile Paintless Dent Repair, Dubai & Sharjah
+# Master Dent Repair — Mobile Paintless Dent Repair, Dubai & Sharjah
 
 Landing page for a paintless dent repair (PDR) business in Dubai. It's a single fast page,
 prerendered to static HTML so Google can read every word. It's built to turn visitors
@@ -35,6 +35,24 @@ Google structured data are all generated from it.
 
 > Keep the name, address and phone **identical** to the Google Business Profile, character for
 > character. Google uses that consistency to trust a local business.
+
+## Logo
+
+All logo files are in [`brand/`](brand/):
+
+| File | Use it for |
+|---|---|
+| `master-dent-profile-picture.png` | WhatsApp, Instagram, Google Maps profile picture (fits the circle crop) |
+| `master-dent-logo-dark-bg.svg` / `.png` | Horizontal logo on dark backgrounds (car stickers, black shirts, videos) |
+| `master-dent-logo-light-bg.svg` / `.png` | Horizontal logo on white (invoices, documents) |
+| `master-dent-logo-stacked.svg` / `.png` | Badge above the name, for square posts and print |
+| `master-dent-mark.svg` / `.png` | The round MD badge on its own |
+| `master-dent-app-icon.svg` | Square app icon (browser tab / phone home screen versions are in `public/`) |
+
+Give printers the **SVG** files: they are vectors and stay sharp at any size.
+Colours: gold `#D9B56A` (deep `#A2762F`, light `#F8E4A8`), silver `#D3D7DC`, black `#0E0C0A`.
+Lettering: Archivo Expanded SemiBold and Geist SemiBold (both free, SIL Open Font License),
+already converted to shapes, so no fonts are needed to use the files.
 
 ## 2. Languages and colours
 

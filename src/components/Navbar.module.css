@@ -22,6 +22,7 @@
   --nav-fg: rgba(255, 255, 255, 0.82);
   --nav-fg-strong: #fff;
   --nav-hover: rgba(255, 255, 255, 0.14);
+  --logo-gold: #d9b56a;
 }
 .onHero .wa { background: #fff; color: #111; }
 @keyframes headerIn { from { opacity: 0; transform: translateY(-100%); } }
@@ -34,14 +35,8 @@
 }
 .home { display: flex; flex-shrink: 0; }
 
-.logo {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
+/* Logo size = height of the "MASTER DENT" capitals (see BrandLogo) */
+.logo { --logo-h: 14px; color: var(--nav-fg-strong); transition: color 0.35s; }
 
 .links {
   display: flex;
@@ -68,9 +63,15 @@
 
 .actions { display: flex; align-items: center; gap: 4px; }
 
-@media (max-width: 960px) {
+/* the full logo needs room: hide the text links a bit earlier */
+@media (max-width: 1100px) {
   .links { display: none; }
   .actions { margin-inline-start: auto; }
+}
+/* Tablets / phones: the small tagline line would be too tiny to read — show it from 721px up */
+@media (max-width: 720px) {
+  .logo { --logo-h: 12px; }
+  .logo [data-part="tagline"] { display: none; }
 }
 /* Phones: WhatsApp button becomes icon-only to fit theme + language buttons */
 @media (max-width: 480px) {
@@ -80,8 +81,7 @@
 /* Small phones: tighten the header so the full name + 3 buttons fit */
 @media (max-width: 420px) {
   .bar { gap: 10px; }
-  .logo { gap: 8px; font-size: 15.5px; white-space: nowrap; }
-  .logo svg { width: 24px; height: 24px; }
+  .logo { --logo-h: 10.5px; }
   .actions { gap: 0; }
   .actions :global(.btn) { padding: 0 12px; }
 }

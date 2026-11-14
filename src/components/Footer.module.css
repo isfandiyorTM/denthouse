@@ -10,7 +10,8 @@
   flex-wrap: wrap;
   gap: 24px 48px;
 }
-.tag { margin-top: 8px; color: var(--text-3); }
+.logo { --logo-h: 15px; color: var(--text); }
+.tag { margin-top: 14px; color: var(--text-3); }
 .links {
   display: flex;
   flex-wrap: wrap;

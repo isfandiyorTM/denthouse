@@ -1,19 +1,4 @@
-// Brand glyphs that lucide doesn't ship, plus the DentHouse logo mark.
-
-export function LogoMark({ size = 32, className }) {
-  // Three reflection lines — the middle one bends where a dent is:
-  // exactly what a PDR technician reads on a line board.
-  return (
-    <svg className={className} width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
-      <rect width="32" height="32" rx="8" fill="#E8580A" />
-      <g fill="none" stroke="#0b0c0e" strokeWidth="2.6" strokeLinecap="round">
-        <path d="M7 9.5h18" />
-        <path d="M7 16h4.2c2.2 0 2.6 3.6 4.8 3.6s2.6-3.6 4.8-3.6H25" />
-        <path d="M7 23h18" />
-      </g>
-    </svg>
-  );
-}
+// Brand glyphs that lucide doesn't ship (the business logo lives in BrandLogo.jsx).
 
 export function WhatsAppIcon({ size = 18, className }) {
   return (

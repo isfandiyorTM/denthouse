@@ -2,34 +2,33 @@ import { Check } from "lucide-react";
 import { BUSINESS } from "../data/business";
 import { useI18n } from "../i18n/context";
 import { yearsOfExperience } from "../lib/helpers";
-import { LogoMark } from "./icons";
+import BrandLogo, { BrandMark } from "./BrandLogo";
 import styles from "./About.module.css";
 
 export default function About() {
   const { lang, t } = useI18n();
   const { owner } = BUSINESS;
-  const [first, ...rest] = owner.name.split(" ");
+  // Until he gives a personal name, the section is about the business ("Master Dent Repair").
+  const title = owner.name || BUSINESS.name;
+  const [first, ...rest] = title.split(" ");
 
   return (
     <section id="about" className="section" data-track="about">
       <div className={`container ${styles.grid}`}>
         {owner.photo ? (
           <div className={styles.photo} data-reveal="clip">
-            <img src={owner.photo} alt={`${owner.name}, ${t.about.role}, ${BUSINESS.name}`} loading="lazy" decoding="async" />
+            <img src={owner.photo} alt={`${title}, ${t.about.role}`} loading="lazy" decoding="async" />
           </div>
         ) : (
           // Until there's a photo of him: a branded card instead of an empty box.
           <div className={styles.emblem} data-reveal="clip" aria-hidden="true">
-            <div className={styles.emblemTop}>
-              <LogoMark size={40} />
-              <span>{BUSINESS.name}</span>
-            </div>
+            <BrandMark className={styles.emblemMark} />
             <div>
               <span className={styles.years} dir="ltr">{yearsOfExperience()}+</span>
               <span className={styles.yearsLabel}>{t.about.yearsLabel}</span>
             </div>
             <div className={styles.emblemBottom}>
-              <span className={styles.signature}>{owner.name}</span>
+              <BrandLogo className={styles.emblemLogo} mark={false} />
               <span className={styles.where}>{t.hero.where}</span>
             </div>
           </div>
@@ -41,7 +40,9 @@ export default function About() {
             <span className={styles.accentWord}>{first}</span>
             {rest.length > 0 && ` ${rest.join(" ")}`}
           </h2>
-          <p className={styles.role}>{t.about.role}{lang === "ar" ? "، " : ", "}{BUSINESS.name}</p>
+          <p className={styles.role}>
+            {owner.name ? `${t.about.role}${lang === "ar" ? "، " : ", "}${BUSINESS.name}` : t.about.role}
+          </p>
 
           <div className={styles.bio}>
             {t.about.bio.map((p, i) => <p key={i}>{p}</p>)}
