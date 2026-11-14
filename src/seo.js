@@ -8,6 +8,7 @@ import { areasFor } from "./data/areas.js";
 import { VIDEOS } from "./data/videos.js";
 import { DEFAULT_LANG, LANGS, getT, langInfo, loc } from "./i18n/index.js";
 import { absoluteUrl, hoursSchema, youtubeId } from "./lib/helpers.js";
+import { HERO_SLIDES, SLIDE_SIZES, slideSrcSet } from "./data/heroSlides.js";
 
 const root = `${B.siteUrl}/`;
 const pageUrl = (lang) => `${B.siteUrl}${langInfo(lang).path}`;
@@ -215,8 +216,9 @@ export function buildHead(lang = DEFAULT_LANG) {
     `<link rel="apple-touch-icon" href="/apple-touch-icon.png" />`,
     `<link rel="manifest" href="/site.webmanifest" />`,
 
-    // Hero photo: start downloading right away (biggest thing on screen)
-    `<link rel="preload" as="image" type="image/webp" imagesrcset="/images/hero-dubai-960.webp 960w, /images/hero-dubai-1600.webp 1600w, /images/hero-dubai-2400.webp 2400w" imagesizes="100vw" fetchpriority="high" />`,
+    // First hero photo: start downloading right away (biggest thing on screen).
+    // The other slideshow photos load later, after the page is ready.
+    `<link rel="preload" as="image" type="image/webp" imagesrcset="${slideSrcSet(HERO_SLIDES[0])}" imagesizes="${SLIDE_SIZES}" fetchpriority="high" />`,
 
     // Fonts (Arabic / Hindi pages also load a font for their script)
     `<link rel="preconnect" href="https://fonts.googleapis.com" />`,

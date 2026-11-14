@@ -55,13 +55,16 @@ Google data, so the Arabic page can rank for Arabic searches.
 Light and dark colours follow the visitor's phone or computer setting automatically. The
 sun / moon button in the header lets visitors choose; their choice is remembered on every page.
 
-### Hero photo
+### Hero slideshow
 
-The top of the page uses a night photo of Dubai Marina by Albert Canite
-([Unsplash](https://unsplash.com/photos/a-city-skyline-at-night-with-lights-reflecting-off-the-water-kBl8gbjCyJs),
-free for commercial use, no credit required). It's in `public/images/hero-dubai-*.webp/.jpg`.
-A real photo of his own work, such as him repairing a car at night, would be even better. Replace the four
-files with the same names and sizes (960, 1600, 2400 px wide).
+The top of the page shows a slideshow of PDR photos (`public/images/hero/`, listed in
+[`src/data/heroSlides.js`](src/data/heroSlides.js)). Only the first photo loads with the page; the
+rest download in the background afterwards, so it stays fast. It pauses when scrolled away, and
+doesn't auto-play on data-saver / 2G connections or with "reduce motion" turned on.
+
+To add or replace a photo: export it as WebP at 960, 1600 and 1920 px wide (as large as the
+original allows, around 30–70 kB each), name it `slide-<number>-<width>.webp`, and add a line to
+`heroSlides.js`. Use the photographer's own photos, or photos you have a license for.
 
 ## 3. Videos
 

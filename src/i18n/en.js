@@ -32,6 +32,7 @@ export default ({ name, area, mobile }) => ({
     note: "Free quote. Send a photo of the dent and we'll reply with a price.",
     stats: { years: "years of experience", paint: "original paint kept", time: "typical repair", timeValue: "1–3 h" },
     scroll: "Scroll down",
+    slides: { label: "Background photos", photo: (i, n) => `Photo ${i} of ${n}`, pause: "Pause slideshow", play: "Play slideshow" },
   },
 
   marquee: { mobile: "We come to you in", static: "Our customers come from" },

@@ -12,24 +12,90 @@
   padding-bottom: 88px;
 }
 
-/* ── Photo: slow zoom-out on load, parallax on scroll (JS) ── */
+/* ── Slideshow: crossfade + slow zoom per photo, parallax on scroll (JS) ── */
 .media {
   position: absolute;
   inset: -2% 0 -12%;
   z-index: -2;
   will-change: transform;
+  animation: mediaIn 1.6s var(--ease) both;
 }
-.media img {
+@keyframes mediaIn { from { opacity: 0; } }
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 62% 45%;
-  animation: kenburns 14s var(--ease) both;
+  object-position: var(--pos, 50% 50%);
+  filter: brightness(var(--dim, 1));
+  transform-origin: 60% 50%;
 }
+.prev { opacity: 1; z-index: 1; }            /* stays underneath while the next fades in */
+.active { opacity: 1; z-index: 2; }
+.active img { animation: kenburns calc(var(--slide-ms) + 2500ms) ease-out both; }
+.paused .active img { animation-play-state: paused; }
 @keyframes kenburns {
-  from { transform: scale(1.14); filter: brightness(0.6); }
-  to { transform: scale(1); filter: brightness(1); }
+  from { transform: scale(1.12); }
+  to { transform: scale(1); }
 }
+
+/* ── Slideshow controls: progress bars + pause ── */
+.controls {
+  position: absolute;
+  bottom: 28px;
+  inset-inline-end: max(var(--gutter), calc((100vw - var(--container)) / 2));
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  animation: rise 0.9s var(--ease) 1.4s both;
+}
+.bar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 32px;
+  border-radius: 6px;
+}
+.track {
+  position: relative;
+  width: 26px;
+  height: 3px;
+  border-radius: 3px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.3);
+  transition: background 0.2s;
+}
+.bar:hover .track { background: rgba(255, 255, 255, 0.55); }
+.fill {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform-origin: left;
+  animation: fill var(--slide-ms) linear both;
+}
+[dir="rtl"] .fill { transform-origin: right; }
+.paused .fill { animation-play-state: paused; }
+.manual .fill { animation: none; } /* not auto-playing: the current bar is simply full */
+@keyframes fill { from { transform: scaleX(0); } }
+
+.pause {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-inline-start: 6px;
+  border-radius: 50%;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  transition: background 0.2s, border-color 0.2s;
+}
+.pause:hover { background: rgba(255, 255, 255, 0.15); border-color: #fff; }
 
 /* Readability: dark on the text side, fading to the photo; bottom fades into the page. */
 .shade {
@@ -180,15 +246,16 @@
 }
 
 @media (max-width: 720px) {
-  .hero { align-items: flex-end; padding-bottom: 72px; }
-  .media img { object-position: 60% 40%; }
+  .hero { align-items: flex-end; padding-bottom: 76px; }
+  .slide img { object-position: var(--pos-m, 50% 50%); }
   .shade {
-    background: linear-gradient(180deg, rgba(10, 8, 6, 0.55) 0%, rgba(10, 8, 6, 0.35) 30%, rgba(10, 8, 6, 0.85) 70%, rgba(10, 8, 6, 0.95) 100%);
+    background: linear-gradient(180deg, rgba(10, 8, 6, 0.62) 0%, rgba(10, 8, 6, 0.5) 28%, rgba(10, 8, 6, 0.86) 62%, rgba(10, 8, 6, 0.96) 100%);
   }
   [dir="rtl"] .shade {
-    background: linear-gradient(180deg, rgba(10, 8, 6, 0.55) 0%, rgba(10, 8, 6, 0.35) 30%, rgba(10, 8, 6, 0.85) 70%, rgba(10, 8, 6, 0.95) 100%);
+    background: linear-gradient(180deg, rgba(10, 8, 6, 0.62) 0%, rgba(10, 8, 6, 0.5) 28%, rgba(10, 8, 6, 0.86) 62%, rgba(10, 8, 6, 0.96) 100%);
   }
   .ctas :global(.btn) { width: 100%; }
   .stats { gap: 16px 28px; }
   .cue { display: none; }
+  .controls { bottom: 18px; }
 }
