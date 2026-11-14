@@ -1,89 +1,68 @@
 .steps {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
-  counter-reset: step;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
 }
-/* connecting line */
+/* line connecting the three numbers */
 .steps::before {
   content: "";
   position: absolute;
-  top: 32px;
-  left: 32px;
-  right: 32px;
+  top: 27px;
+  inset-inline: 28px;
   height: 2px;
-  background: repeating-linear-gradient(90deg, var(--line-strong) 0 8px, transparent 8px 16px);
+  background: linear-gradient(90deg, var(--accent), var(--line-strong));
+  transform-origin: left;
 }
+[dir="rtl"] .steps::before {
+  background: linear-gradient(270deg, var(--accent), var(--line-strong));
+  transform-origin: right;
+}
+/* draws itself when the list scrolls into view */
+.steps:global(.rv-pending)::before { transform: scaleX(0); }
+.steps:global(.rv-in)::before { transition: transform 1.6s var(--ease) 0.2s; }
 
 .step { position: relative; }
-.marker {
-  position: relative;
-  width: 64px;
-  height: 64px;
-  margin-bottom: 26px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--bg);
-  border: 1px solid var(--line-strong);
-}
-.icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: var(--surface-2);
-  color: var(--accent-text);
-}
-.step:last-child .icon { background: var(--accent); color: var(--on-accent); }
-
 .num {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-3);
-  margin-bottom: 8px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 24px;
+  border-radius: 50%;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  font-size: 20px;
+  font-weight: 600;
+  box-shadow: 0 0 0 8px var(--bg-alt);
+  transition: transform 0.4s var(--ease);
 }
-.title {
-  font-size: 1.35rem;
-  font-weight: 750;
-  font-stretch: 108%;
-  letter-spacing: -0.02em;
-  margin-bottom: 10px;
-}
-.text { color: var(--text-2); font-size: 15px; max-width: 32ch; }
+.step:hover .num { transform: scale(1.1); }
+.title { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+.text { color: var(--text-2); max-width: 30ch; }
 
-.cta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-top: clamp(40px, 6vw, 64px);
-}
-.ctaNote { font-size: 14px; color: var(--text-3); }
+.cta { margin-top: 48px; }
 
-@media (max-width: 900px) {
-  .steps { grid-template-columns: 1fr; gap: 0; }
+@media (max-width: 800px) {
+  .steps { grid-template-columns: 1fr; gap: 28px; }
   .steps::before {
-    top: 32px;
-    bottom: 32px;
-    left: 31px;
-    right: auto;
+    top: 28px;
+    bottom: 28px;
+    inset-inline: 27px auto;
     width: 2px;
     height: auto;
-    background: repeating-linear-gradient(180deg, var(--line-strong) 0 8px, transparent 8px 16px);
+    background: linear-gradient(180deg, var(--accent), var(--line-strong));
+    transform-origin: top;
   }
+  [dir="rtl"] .steps::before { background: linear-gradient(180deg, var(--accent), var(--line-strong)); transform-origin: top; }
+  .steps:global(.rv-pending)::before { transform: scaleY(0); }
   .step {
     display: grid;
-    grid-template-columns: 64px 1fr;
+    grid-template-columns: 56px 1fr;
     column-gap: 20px;
-    padding-bottom: 32px;
   }
-  .step:last-child { padding-bottom: 0; }
-  .marker { grid-row: span 3; margin-bottom: 0; }
-  .num { margin-top: 8px; }
+  .num { grid-row: span 2; margin-bottom: 0; }
+  .title { margin-top: 12px; }
+  .cta { width: 100%; }
 }

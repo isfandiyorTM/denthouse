@@ -24,18 +24,46 @@ Google structured data are all generated from it.
 | Name, phone, WhatsApp, email | `business.js` → `contact` | WhatsApp = digits only, e.g. `971501234567` |
 | Workshop address + map pin | `business.js` → `address`, `geo` | Right-click the pin in Google Maps to copy coordinates |
 | Opening hours | `business.js` → `hours` | Drives the live "Open now / Closed" badge (Dubai time) |
-| Master's name, bio, photo | `business.js` → `owner` | Put the photo in `public/images/`. A real photo builds trust. |
+| Master's name and photo | `business.js` → `owner` | Put the photo in `public/images/`. A real photo builds trust. |
+| His bio, role, skills | each language file → `about` | See *Languages* below |
 | Google Maps + review links | `business.js` → `googleMapsUrl`, `googleReviewUrl` | Turns on the Reviews section and "Get directions" |
 | Rating, cars repaired | `business.js` → `rating`, `carsRepaired` | **Only real numbers.** Hidden while `null`. |
 | Instagram / TikTok / YouTube | `business.js` → `social` | Also linked to the business in Google's data |
 | Domain | `business.js` → `siteUrl` | Used for canonical URL, sitemap, link previews |
-| Real reviews | [`src/data/content.js`](src/data/content.js) → `REVIEWS` | Copy real Google reviews only, never write your own |
-| Services, FAQ, areas served | `content.js` | Edit freely, the FAQ also goes into Google's data |
+| Real reviews | [`src/data/reviews.js`](src/data/reviews.js) | Copy real Google reviews only, never write your own |
+| Areas served | [`src/data/areas.js`](src/data/areas.js) | English + Arabic names |
+| Workshop area in other languages | `business.js` → `address.areaLocal` | e.g. القوز for Al Quoz |
 
 > Keep the name, address and phone **identical** to the Google Business Profile, character for
 > character. Google uses that consistency to trust a local business.
 
-## 2. Videos
+## 2. Languages and colours
+
+The site comes in **English** (`/`), **Arabic** (`/ar/`, right-to-left), **Russian** (`/ru/`) and
+**Hindi** (`/hi/`). Each one is its own prerendered page with its own title, description and
+Google data, so the Arabic page can rank for Arabic searches.
+
+- All page text is in [`src/i18n/`](src/i18n/): `en.js`, `ar.js`, `ru.js`, `hi.js`. Every file has
+  the same structure, so to change a sentence, change it in each file.
+- **Have a native speaker read the Arabic, Russian and Hindi once before launch.**
+- First-time visitors whose phone is set to Arabic, Russian or Hindi are sent to that language
+  automatically. A choice made in the language menu (globe icon) is remembered and always wins.
+- To add a language (e.g. Urdu): copy `en.js` to `ur.js`, translate it, and add one line to
+  `LANGS` in [`src/i18n/index.js`](src/i18n/index.js).
+- Video titles and reviews can be one language, or `{ en: "…", ar: "…" }` for several.
+
+Light and dark colours follow the visitor's phone or computer setting automatically. The
+sun / moon button in the header lets visitors choose; their choice is remembered on every page.
+
+### Hero photo
+
+The top of the page uses a night photo of Dubai Marina by Albert Canite
+([Unsplash](https://unsplash.com/photos/a-city-skyline-at-night-with-lights-reflecting-off-the-water-kBl8gbjCyJs),
+free for commercial use, no credit required). It's in `public/images/hero-dubai-*.webp/.jpg`.
+A real photo of his own work, such as him repairing a car at night, would be even better. Replace the four
+files with the same names and sizes (960, 1600, 2400 px wide).
+
+## 3. Videos
 
 Edit [`src/data/videos.js`](src/data/videos.js). The six entries there now are **samples**:
 they show a yellow "Sample" badge and play a placeholder clip. Replace them with real repairs.
@@ -49,7 +77,7 @@ Always add a `poster` (cover image, e.g. `/videos/patrol-hail.jpg`). It makes th
 fast, and videos with a poster are submitted to Google Video search automatically.
 Use `vertical: true` for phone-shot / Reels videos. Keep MP4s short (15–60 s) and under ~15 MB.
 
-## 3. Deploy
+## 4. Deploy
 
 It's a static site. **Netlify** is set up through [`netlify.toml`](netlify.toml): every push to
 `main` is built with `npm run build` and published from `dist`. On Netlify the site address
@@ -62,7 +90,7 @@ instructions are at the top of [`scripts/og-image.html`](scripts/og-image.html).
 
 ---
 
-## 4. Getting found on Google in Dubai
+## 5. Getting found on Google in Dubai
 
 The website is the foundation. These steps decide whether it shows up when someone in Dubai
 searches "dent repair", "PDR Dubai" or "dent removal near me". Ranking takes weeks to months,
@@ -83,10 +111,10 @@ and nobody can guarantee position #1. These steps are what moves it.
 5. **Instagram / TikTok.** Post every repair as a short before → after video, put the website
    in the bio, and add the profile links to `business.js`.
 6. **Measure.** Put a Google Analytics 4 ID in `business.js → analytics`. Every tap on Call,
-   WhatsApp, Email or Directions is sent as a `contact_click` event, and every form submission
-   as `generate_lead`. Mark them as key events in GA4.
-7. **Next step:** an Arabic (and possibly Russian) version of the page, to reach people who
-   search in those languages.
+   WhatsApp, Email or Directions is sent as a `contact_click` event. Mark it as a key event
+   in GA4.
+7. **Google Business Profile in Arabic too:** add an Arabic business description and reply to
+   Arabic reviews in Arabic.
 
 ### What's already built in for SEO
 - Full page prerendered to HTML at build time ([`scripts/prerender.mjs`](scripts/prerender.mjs)).
@@ -94,7 +122,7 @@ and nobody can guarantee position #1. These steps are what moves it.
   founder, FAQ, plus videos once real ones are added ([`src/seo.js`](src/seo.js)).
 - Keyword-focused title, description and headings ("Paintless Dent Repair in Dubai"),
   Dubai neighbourhood names, local geo tags, canonical URL, sitemap, robots.txt.
-- Link previews for WhatsApp, Instagram and Facebook (`public/og-image.png`).
+- Link previews for WhatsApp, Instagram and Facebook (`public/og-image.jpg`).
 - Fast and mobile-first: one small JS bundle, no images required, sticky Call/WhatsApp bar on phones.
 
 ---
@@ -104,7 +132,9 @@ and nobody can guarantee position #1. These steps are what moves it.
 ```
 src/
   data/business.js     ← company details (edit me)
-  data/content.js      ← services, FAQ, areas, comparison, reviews
+  data/areas.js        ← neighbourhoods served (English + Arabic)
+  data/reviews.js      ← real customer reviews
+  i18n/*.js            ← all page text, one file per language
   data/videos.js       ← repair videos
   seo.js               ← <head> tags, JSON-LD, sitemap, robots (generated from data/)
   components/          ← one component + CSS module per page section

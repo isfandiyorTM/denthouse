@@ -1,0 +1,12 @@
+.button {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  color: var(--nav-fg, var(--text-2));
+  transition: background 0.15s, color 0.15s;
+}
+.button:hover { background: var(--nav-hover, var(--bg-alt)); color: var(--nav-fg-strong, var(--text)); }
+.button svg { transition: transform 0.5s var(--ease); }
+.button:hover svg { transform: rotate(-25deg); }

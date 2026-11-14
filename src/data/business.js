@@ -27,22 +27,11 @@ export const BUSINESS = {
 
   owner: {
     name: "Master Name", // TODO: his real name
-    role: "Founder & Master PDR Technician",
     // Put a photo in /public/images and set e.g. "/images/master.jpg". A real
     // photo of him at work builds more trust than anything else on the page.
     photo: null, // TODO
-    bio: [
-      // TODO: rewrite in his own words — where he learned, what he loves about the craft.
-      "Every dent tells you how to fix it — if you know how to read the reflection. For more than a decade, that has been the craft: reading a panel under a striped light board, then working the metal back from behind, millimetre by millimetre, until the lines run perfectly straight again.",
-      "No filler. No sanding. No respray. Just specialist rods, glue-pull tabs, patience, and the original factory paint left exactly as it left the factory.",
-      "DentHouse runs on one rule: tell the customer the truth. If paintless repair can't give you a perfect result, you'll hear that before any work starts.",
-    ],
-    // Short facts shown with check marks. Only list things that are true.
-    credentials: [
-      "Steel and aluminium panels", // TODO: confirm
-      "Hail damage specialist", // TODO: confirm
-      "Daily drivers to supercars and EVs", // TODO: confirm
-    ],
+    // His role, bio and skills are text, so they live in each language file:
+    // src/i18n/en.js, ar.js, ru.js, hi.js → about
   },
 
   contact: {
@@ -55,6 +44,8 @@ export const BUSINESS = {
   address: {
     street: "Al Quoz Industrial Area 3", // TODO: warehouse / unit number + street
     area: "Al Quoz", // TODO: neighbourhood — used in headings ("workshop in Al Quoz")
+    // The same neighbourhood written in the other site languages (English is used if missing).
+    areaLocal: { ar: "القوز", ru: "Аль-Куоз", hi: "अल क़ूज़" }, // TODO: update with `area`
     city: "Dubai",
     region: "Dubai",
     country: "AE",

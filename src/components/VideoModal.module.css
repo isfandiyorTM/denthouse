@@ -4,81 +4,59 @@
   z-index: 80;
   display: grid;
   place-items: center;
-  padding: 16px;
-  background: rgba(5, 6, 8, 0.82);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  padding: 20px;
+  background: rgba(17, 17, 17, 0.6);
   overflow-y: auto;
-  animation: fade 0.25s ease;
+  animation: fade 0.2s ease;
 }
 
 .dialog {
   width: 100%;
-  max-width: 860px;
-  border-radius: var(--radius-lg);
+  max-width: 820px;
+  border-radius: 16px;
   background: var(--surface);
-  border: 1px solid var(--line-strong);
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
   overflow: hidden;
-  animation: pop 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.wide { max-width: 1180px; }
+.wide { max-width: 1120px; }
 
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 16px;
   padding: 20px 20px 16px 24px;
 }
-.kicker {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent-text);
-  margin-bottom: 6px;
-}
-.title {
-  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
-  font-weight: 750;
-  font-stretch: 108%;
-  letter-spacing: -0.02em;
-}
-.car { color: var(--text-3); font-size: 14px; margin-top: 2px; }
+.title { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; }
+.meta { margin-top: 2px; font-size: 15px; color: var(--text-3); }
 
 .close {
   flex-shrink: 0;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--surface-2);
-  color: var(--text);
-  transition: background 0.2s;
+  background: var(--bg-alt);
 }
-.close:hover { background: var(--line-strong); }
+.close:hover { background: var(--line); }
 
 .tabs {
   display: inline-flex;
   gap: 4px;
-  margin: 0 24px 14px;
+  margin: 0 24px 16px;
   padding: 4px;
-  border-radius: 999px;
-  background: var(--surface-2);
+  border-radius: 10px;
+  background: var(--bg-alt);
 }
 .tab {
   height: 34px;
   padding: 0 14px;
-  border-radius: 999px;
-  font-size: 13px;
-  font-weight: 650;
-  color: var(--text-2);
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-3);
 }
-.tabActive { background: var(--surface); color: var(--text); box-shadow: var(--shadow-sm); }
+.tabActive { background: var(--bg); color: var(--text); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08); }
 
 .stage { background: #000; }
 .frame {
@@ -87,7 +65,6 @@
   aspect-ratio: 16 / 9;
   max-height: 72vh;
   margin-inline: auto;
-  background: #000;
 }
 .frame iframe,
 .frame video {
@@ -97,53 +74,37 @@
   height: 100%;
   border: 0;
   object-fit: contain;
+  background: #000;
 }
 .vertical { aspect-ratio: 9 / 16; width: auto; height: 72vh; max-width: 100%; }
 
-.split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-}
-.sideLabel {
+.split { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+.side {
   padding: 8px 12px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 500;
   color: #fff;
-  background: #15171b;
+  background: #1a1a1a;
 }
-.sideAfter { background: #e8580a; color: #0b0c0e; }
 
-.desc {
-  padding: 18px 24px 0;
-  color: var(--text-2);
-  font-size: 15px;
-}
+.desc { padding: 18px 24px 0; color: var(--text-2); font-size: 16px; }
 
 .footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
-  margin: 18px 24px 24px;
-  padding: 16px 16px 16px 20px;
-  border-radius: var(--radius);
-  background: var(--accent-soft);
-  border: 1px solid var(--accent-line);
-  font-size: 15px;
-  color: var(--text-2);
+  margin-top: 18px;
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--line);
+  font-weight: 500;
 }
-.footer strong { color: var(--text); }
 
 @keyframes fade { from { opacity: 0; } }
-@keyframes pop { from { opacity: 0; transform: translateY(16px) scale(0.98); } }
 
 @media (max-width: 640px) {
   .backdrop { padding: 0; place-items: end stretch; }
-  .dialog { border-radius: var(--radius-lg) var(--radius-lg) 0 0; max-height: 100dvh; overflow-y: auto; }
+  .dialog { border-radius: 16px 16px 0 0; max-height: 100dvh; overflow-y: auto; }
   .split { grid-template-columns: 1fr; }
-  .footer { flex-direction: column; align-items: stretch; text-align: center; }
   .vertical { height: 64vh; }
 }

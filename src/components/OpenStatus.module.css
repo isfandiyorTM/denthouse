@@ -1,28 +1,14 @@
 .status {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 7px;
 }
 .dot {
-  position: relative;
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--text-3);
+  background: var(--line-strong);
   flex-shrink: 0;
 }
 .open { background: var(--ok); }
-.open::after {
-  content: "";
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  background: var(--ok);
-  opacity: 0.35;
-  animation: pulse 2s ease-out infinite;
-}
-.closed { background: #ef4444; }
-@keyframes pulse {
-  0% { transform: scale(0.6); opacity: 0.5; }
-  100% { transform: scale(1.8); opacity: 0; }
-}
+.closed { background: #dc2626; }

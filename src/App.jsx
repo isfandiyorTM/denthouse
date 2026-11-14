@@ -1,45 +1,45 @@
 // Global styles first, so component (module) styles can override them.
 import "./styles/global.css";
+import { I18nProvider } from "./i18n/context";
+import { getT } from "./i18n";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import BrandMarquee from "./components/BrandMarquee";
-import Services from "./components/Services";
 import Work from "./components/Work";
-import WhyPdr from "./components/WhyPdr";
+import AreasMarquee from "./components/AreasMarquee";
+import Benefits from "./components/Benefits";
+import Services from "./components/Services";
 import Process from "./components/Process";
 import About from "./components/About";
 import Reviews from "./components/Reviews";
-import Areas from "./components/Areas";
 import Faq from "./components/Faq";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import FloatingActions from "./components/FloatingActions";
-import { useReveal } from "./hooks/useReveal";
+import MobileBar from "./components/MobileBar";
 import { useLeadTracking } from "./hooks/useLeadTracking";
+import { useReveal } from "./hooks/useReveal";
 
-export default function App() {
-  useReveal();
+export default function App({ lang }) {
   useLeadTracking();
+  useReveal();
 
   return (
-    <>
-      <a href="#main" className="skip-link">Skip to content</a>
+    <I18nProvider lang={lang}>
+      <a href="#main" className="skip-link">{getT(lang).skip}</a>
       <Navbar />
       <main id="main">
         <Hero />
-        <BrandMarquee />
-        <Services />
+        <AreasMarquee />
+        <Benefits />
         <Work />
-        <WhyPdr />
+        <Services />
         <Process />
         <About />
         <Reviews />
-        <Areas />
         <Faq />
         <Contact />
       </main>
       <Footer />
-      <FloatingActions />
-    </>
+      <MobileBar />
+    </I18nProvider>
   );
 }

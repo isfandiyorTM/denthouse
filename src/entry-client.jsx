@@ -1,11 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot, hydrateRoot } from "react-dom/client";
 import App from "./App.jsx";
+import { langFromPath } from "./i18n";
 
+const lang = langFromPath(window.location.pathname);
 const container = document.getElementById("root");
 const app = (
   <StrictMode>
-    <App />
+    <App lang={lang} />
   </StrictMode>
 );
 

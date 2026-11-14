@@ -3,7 +3,6 @@
 import { BUSINESS } from "../data/business.js";
 
 const DAY_KEYS = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
-const DAY_SHORT = { Mo: "Mon", Tu: "Tue", We: "Wed", Th: "Thu", Fr: "Fri", Sa: "Sat", Su: "Sun" };
 const DAY_SCHEMA = {
   Mo: "Monday", Tu: "Tuesday", We: "Wednesday", Th: "Thursday",
   Fr: "Friday", Sa: "Saturday", Su: "Sunday",
@@ -20,8 +19,6 @@ export function waLink(text = "") {
 }
 export const telLink = `tel:${BUSINESS.contact.phone}`;
 export const mailLink = `mailto:${BUSINESS.contact.email}`;
-
-export const WA_QUOTE_TEXT = `Hi ${BUSINESS.name}! I have a dent I'd like fixed. I'll send a photo — could you give me a price?`;
 
 export function directionsUrl() {
   if (BUSINESS.googleMapsUrl) return BUSINESS.googleMapsUrl;
@@ -43,11 +40,10 @@ export function yearsOfExperience(now = new Date()) {
 }
 
 /* ── Opening hours ─────────────────────────────────────────── */
-function formatTime(hhmm) {
+// `t` is the language dictionary (src/i18n/*.js): it supplies day names and time format.
+function formatTime(hhmm, t) {
   const [h, m] = hhmm.split(":").map(Number);
-  const suffix = h >= 12 ? "pm" : "am";
-  const h12 = h % 12 === 0 ? 12 : h % 12;
-  return m ? `${h12}:${String(m).padStart(2, "0")} ${suffix}` : `${h12} ${suffix}`;
+  return t.time(h, m);
 }
 
 /** Groups consecutive days with identical hours: [{ days: ["Mo",…], hours: [open, close] | null }] */
@@ -63,10 +59,10 @@ export function hoursGroups(hours = BUSINESS.hours) {
 }
 
 /** Human-readable rows: [{ label: "Mon – Sat", value: "8 am – 6 pm" }] */
-export function hoursRows() {
+export function hoursRows(t) {
   return hoursGroups().map(({ days, hours }) => ({
-    label: days.length > 1 ? `${DAY_SHORT[days[0]]} – ${DAY_SHORT[days[days.length - 1]]}` : DAY_SHORT[days[0]],
-    value: hours ? `${formatTime(hours[0])} – ${formatTime(hours[1])}` : "Closed",
+    label: days.length > 1 ? `${t.days[days[0]]} – ${t.days[days[days.length - 1]]}` : t.days[days[0]],
+    value: hours ? `${formatTime(hours[0], t)} – ${formatTime(hours[1], t)}` : t.closedDay,
   }));
 }
 
@@ -83,7 +79,7 @@ export function hoursSchema() {
 }
 
 /** Open/closed status in the business's own time zone. Call on the client only. */
-export function openStatus(now = new Date()) {
+export function openStatus(t, now = new Date()) {
   const parts = new Intl.DateTimeFormat("en-GB", {
     timeZone: BUSINESS.timeZone, weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23",
   }).formatToParts(now);
@@ -94,7 +90,7 @@ export function openStatus(now = new Date()) {
 
   const today = BUSINESS.hours[DAY_KEYS[todayIdx]];
   if (today && minutes >= toMin(today[0]) && minutes < toMin(today[1])) {
-    return { open: true, text: `Open now · until ${formatTime(today[1])}` };
+    return { open: true, text: t.status.open(formatTime(today[1], t)) };
   }
   // Find next opening
   for (let i = 0; i < 8; i++) {
@@ -102,10 +98,10 @@ export function openStatus(now = new Date()) {
     const h = BUSINESS.hours[DAY_KEYS[idx]];
     if (!h) continue;
     if (i === 0 && minutes >= toMin(h[0])) continue;
-    const when = i === 0 ? "today" : i === 1 ? "tomorrow" : DAY_SHORT[DAY_KEYS[idx]];
-    return { open: false, text: `Closed · opens ${when} ${formatTime(h[0])}` };
+    const when = i === 0 ? t.status.today : i === 1 ? t.status.tomorrow : t.days[DAY_KEYS[idx]];
+    return { open: false, text: t.status.closed(when, formatTime(h[0], t)) };
   }
-  return { open: false, text: "Closed" };
+  return { open: false, text: t.status.closedAll };
 }
 
 /* ── Video sources ─────────────────────────────────────────── */
@@ -123,9 +119,3 @@ export function absoluteUrl(path) {
   return `${BUSINESS.siteUrl}${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
-/** Cheap deterministic hash → 0..1, used to vary generated artwork per item. */
-export function seeded(str, salt = 0) {
-  let h = 2166136261 ^ salt;
-  for (let i = 0; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 16777619);
-  return ((h >>> 0) % 10000) / 10000;
-}

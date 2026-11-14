@@ -1,11 +1,13 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { buildHead, buildSitemap, buildRobots, buildManifest } from "./src/seo.js";
+import { buildHead, buildSitemap, buildRobots, buildManifest, htmlAttrs } from "./src/seo.js";
+import { langFromPath } from "./src/i18n/index.js";
 
 /**
- * Injects SEO <head> tags (dev + build) and emits sitemap.xml, robots.txt
- * and site.webmanifest — all generated from src/data/business.js.
- * The page body itself is prerendered by scripts/prerender.mjs.
+ * SEO plugin.
+ * - Dev: fills in <head> and <html lang/dir> for the language in the URL (/, /ar/, /ru/, /hi/).
+ * - Build: emits sitemap.xml, robots.txt, site.webmanifest. The per-language pages
+ *   (head + prerendered body) are written by scripts/prerender.mjs.
  */
 function seo() {
   let isSsrBuild = false;
@@ -16,7 +18,11 @@ function seo() {
     },
     transformIndexHtml: {
       order: "post",
-      handler: (html) => html.replace("<!--app-head-->", buildHead()),
+      handler(html, ctx) {
+        if (!ctx.server) return html; // build: prerender.mjs handles it per language
+        const lang = langFromPath(ctx.originalUrl || "/");
+        return html.replace('<html lang="en">', `<html ${htmlAttrs(lang)}>`).replace("<!--app-head-->", buildHead(lang));
+      },
     },
     configureServer(server) {
       const files = {

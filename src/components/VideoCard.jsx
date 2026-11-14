@@ -1,49 +1,29 @@
-import { MapPin, Play } from "lucide-react";
-import { SERVICES } from "../data/content";
-import { cx, youtubeId } from "../lib/helpers";
-import LineBoard from "./LineBoard";
+import { Play } from "lucide-react";
+import { loc } from "../i18n";
+import { useI18n } from "../i18n/context";
+import { youtubeId } from "../lib/helpers";
 import styles from "./VideoCard.module.css";
 
-function Thumb({ video }) {
+export default function VideoCard({ video, onOpen }) {
+  const { lang, t } = useI18n();
+  const title = loc(video.title, lang);
   const yt = youtubeId(video.video || video.before || video.after);
-  const src = video.poster || (yt ? `https://i.ytimg.com/vi/${yt}/hqdefault.jpg` : null);
-  if (src) {
-    return <img className={styles.img} src={src} alt="" loading="lazy" decoding="async" />;
-  }
-  // No cover image yet → generated line-board artwork, unique per video.
-  return <LineBoard seed={video.id} lines={9} tags={false} />;
-}
-
-export default function VideoCard({ video, index = 0, onOpen }) {
-  const service = SERVICES.find((s) => s.id === video.service);
-  const isPair = Boolean(video.before && video.after);
+  const cover = video.poster || (yt ? `https://i.ytimg.com/vi/${yt}/hqdefault.jpg` : null);
 
   return (
-    <article className={styles.card} data-reveal style={{ "--i": index % 3 }}>
-      <button type="button" className={styles.thumb} onClick={onOpen} aria-label={`Play video: ${video.title}, ${video.car}`}>
-        <Thumb video={video} />
-        <span className={styles.shade} aria-hidden="true" />
+    <article className={styles.card}>
+      <button type="button" className={styles.thumb} onClick={onOpen} aria-label={t.work.play(title, video.car)}>
+        {cover && <img src={cover} alt="" loading="lazy" decoding="async" />}
         <span className={styles.play} aria-hidden="true">
-          <Play size={22} fill="currentColor" />
+          <Play size={18} fill="currentColor" />
         </span>
-        <span className={styles.badges} aria-hidden="true">
-          {service && <span className={styles.badge}>{service.short}</span>}
-          {isPair && <span className={cx(styles.badge, styles.badgeAccent)}>Before / After</span>}
-        </span>
-        {video.sample && <span className={styles.sample}>Sample</span>}
+        {video.sample && <span className={styles.sample}>{t.work.sample}</span>}
       </button>
-      <div className={styles.body}>
-        <h3 className={styles.title}>{video.title}</h3>
-        <p className={styles.meta}>
-          <span>{video.car}</span>
-          {video.area && (
-            <span className={styles.area}>
-              <MapPin size={13} aria-hidden="true" />
-              {video.area}
-            </span>
-          )}
-        </p>
-      </div>
+      <h3 className={styles.title}>{title}</h3>
+      <p className={styles.meta}>
+        {video.car}
+        {video.area && ` · ${loc(video.area, lang)}`}
+      </p>
     </article>
   );
 }

@@ -1,45 +1,42 @@
 import { useEffect, useRef, useState } from "react";
-import { MapPin, X } from "lucide-react";
-import { BUSINESS } from "../data/business";
-import { SERVICES } from "../data/content";
+import { X } from "lucide-react";
 import { cx, waLink, youtubeId } from "../lib/helpers";
+import { loc } from "../i18n";
+import { useI18n } from "../i18n/context";
 import { WhatsAppIcon } from "./icons";
 import styles from "./VideoModal.module.css";
 
 function Player({ src, poster, title, vertical, autoPlay = true }) {
   const yt = youtubeId(src);
-  if (yt) {
-    return (
-      <div className={cx(styles.frame, vertical && styles.vertical)}>
+  return (
+    <div className={cx(styles.frame, vertical && styles.vertical)}>
+      {yt ? (
         <iframe
-          src={`https://www.youtube-nocookie.com/embed/${yt}?autoplay=${autoPlay ? 1 : 0}&rel=0&playsinline=1&modestbranding=1`}
+          src={`https://www.youtube-nocookie.com/embed/${yt}?autoplay=${autoPlay ? 1 : 0}&rel=0&playsinline=1`}
           title={title}
           allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
           allowFullScreen
         />
-      </div>
-    );
-  }
-  return (
-    <div className={cx(styles.frame, styles.native, vertical && styles.vertical)}>
-      <video src={src} poster={poster} controls autoPlay={autoPlay} playsInline preload="metadata" aria-label={title} />
+      ) : (
+        <video src={src} poster={poster} controls autoPlay={autoPlay} playsInline preload="metadata" aria-label={title} />
+      )}
     </div>
   );
 }
 
 export default function VideoModal({ video, onClose }) {
+  const { lang, t } = useI18n();
+  const title = loc(video.title, lang);
   const dialogRef = useRef(null);
   const closeRef = useRef(null);
-  const isPair = Boolean(video.before && video.after);
-  const [view, setView] = useState("before");
-  const service = SERVICES.find((s) => s.id === video.service);
   const onCloseRef = useRef(onClose);
   onCloseRef.current = onClose;
+  const isPair = Boolean(video.before && video.after);
+  const [view, setView] = useState("before");
 
   useEffect(() => {
     const opener = document.activeElement;
     const root = document.documentElement;
-    const prevOverflow = root.style.overflow;
     root.style.overflow = "hidden";
     closeRef.current?.focus();
 
@@ -57,7 +54,7 @@ export default function VideoModal({ video, onClose }) {
     document.addEventListener("keydown", onKey);
     return () => {
       document.removeEventListener("keydown", onKey);
-      root.style.overflow = prevOverflow;
+      root.style.overflow = "";
       opener?.focus?.();
     };
   }, []);
@@ -74,26 +71,17 @@ export default function VideoModal({ video, onClose }) {
       >
         <header className={styles.header}>
           <div>
-            <p className={styles.kicker}>
-              {service?.short}
-              {video.area && (
-                <>
-                  <span aria-hidden="true"> · </span>
-                  <MapPin size={12} aria-hidden="true" /> {video.area}
-                </>
-              )}
-            </p>
-            <h2 id="video-modal-title" className={styles.title}>{video.title}</h2>
-            <p className={styles.car}>{video.car}</p>
+            <h2 id="video-modal-title" className={styles.title}>{title}</h2>
+            <p className={styles.meta}>{video.car}{video.area && ` · ${loc(video.area, lang)}`}</p>
           </div>
-          <button ref={closeRef} type="button" className={styles.close} onClick={onClose} aria-label="Close video">
+          <button ref={closeRef} type="button" className={styles.close} onClick={onClose} aria-label={t.modal.close}>
             <X size={20} aria-hidden="true" />
           </button>
         </header>
 
         {isPair && (
-          <div className={styles.tabs} role="group" aria-label="Choose view">
-            {[["before", "Before"], ["after", "After"], ["split", "Side by side"]].map(([id, label]) => (
+          <div className={styles.tabs} role="group" aria-label={t.modal.views}>
+            {[["before", t.modal.before], ["after", t.modal.after], ["split", t.modal.split]].map(([id, label]) => (
               <button
                 key={id}
                 type="button"
@@ -108,36 +96,34 @@ export default function VideoModal({ video, onClose }) {
         )}
 
         <div className={styles.stage}>
-          {!isPair && <Player src={video.video} poster={video.poster} title={video.title} vertical={video.vertical} />}
+          {!isPair && <Player src={video.video} poster={video.poster} title={title} vertical={video.vertical} />}
           {isPair && view !== "split" && (
-            <Player key={view} src={video[view]} title={`${video.title} — ${view}`} vertical={video.vertical} />
+            <Player key={view} src={video[view]} title={`${title} (${t.modal[view]})`} vertical={video.vertical} />
           )}
           {isPair && view === "split" && (
             <div className={styles.split}>
               {["before", "after"].map((side) => (
                 <div key={side}>
-                  <p className={cx(styles.sideLabel, side === "after" && styles.sideAfter)}>{side}</p>
-                  <Player src={video[side]} title={`${video.title} — ${side}`} vertical={video.vertical} autoPlay={false} />
+                  <p className={styles.side}>{t.modal[side]}</p>
+                  <Player src={video[side]} title={`${title} (${t.modal[side]})`} vertical={video.vertical} autoPlay={false} />
                 </div>
               ))}
             </div>
           )}
         </div>
 
-        {video.description && <p className={styles.desc}>{video.description}</p>}
+        {video.description && <p className={styles.desc}>{loc(video.description, lang)}</p>}
 
         <footer className={styles.footer}>
-          <p>
-            <strong>Got a dent like this?</strong> Send a photo — we'll price it for free.
-          </p>
+          <p>{t.modal.similar}</p>
           <a
-            className="btn btn-primary"
-            href={waLink(`Hi ${BUSINESS.name}! I saw your "${video.title}" video. I have a similar dent — here's a photo:`)}
+            className="btn btn-dark btn-sm"
+            href={waLink(t.wa.video(title))}
             target="_blank"
             rel="noopener noreferrer"
           >
-            <WhatsAppIcon size={18} />
-            Get a quote
+            <WhatsAppIcon size={16} />
+            {t.modal.send}
           </a>
         </footer>
       </div>
