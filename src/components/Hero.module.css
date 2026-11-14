@@ -1,15 +1,24 @@
-/* The hero is always dark (it sits on a night photo), in both themes. */
+/* The hero is always dark (it sits on photos), in both themes.
+ *
+ * It is exactly one screen tall on every device. Sizes and spacing below are
+ * tied to the screen HEIGHT (svh) as well as the width, and on short screens
+ * the least important lines step aside (note → stats → paragraph), so the
+ * header + hero always fit in one window. `svh` = height with mobile browser
+ * bars showing, so phones fit even before the bars hide.
+ */
 .hero {
+  --gap: clamp(8px, 2.6svh, 28px);
   position: relative;
-  min-height: min(100svh, 980px);
+  min-height: 100vh; /* fallback for old browsers */
+  min-height: 100svh;
   display: flex;
   align-items: center;
   overflow: hidden;
   isolation: isolate;
   color: #fff;
   background: #120d09;
-  padding-top: calc(var(--nav-h) + 48px);
-  padding-bottom: 88px;
+  padding-top: calc(var(--nav-h) + clamp(4px, 2svh, 32px));
+  padding-bottom: clamp(56px, 9svh, 84px); /* room for the slideshow controls + scroll cue */
 }
 
 /* ── Slideshow: crossfade + slow zoom per photo, parallax on scroll (JS) ── */
@@ -48,7 +57,7 @@
 /* ── Slideshow controls: progress bars + pause ── */
 .controls {
   position: absolute;
-  bottom: 28px;
+  bottom: clamp(12px, 2.6svh, 28px);
   inset-inline-end: max(var(--gutter), calc((100vw - var(--container)) / 2));
   display: flex;
   align-items: center;
@@ -140,37 +149,38 @@
   from { opacity: 0; transform: translateY(0.45em); filter: blur(10px); }
 }
 
-/* ── Content ── */
+/* ── Content (sizes follow screen width AND height) ── */
 .meta {
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  padding: 7px 16px;
+  gap: 4px 12px;
+  padding: clamp(4px, 0.8svh, 7px) 16px;
   border-radius: 999px;
-  font-size: 14.5px;
+  font-size: 14px;
   color: rgba(255, 255, 255, 0.85);
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.16);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  margin-bottom: 26px;
+  margin-bottom: var(--gap);
 }
 .sep { width: 1px; height: 14px; background: rgba(255, 255, 255, 0.25); }
 
 .title {
   max-width: 13ch;
-  font-size: clamp(2.8rem, 7.4vw, 5.6rem);
+  font-size: clamp(2rem, min(9.5vw, 8.4svh), 5.6rem);
   font-weight: 600;
   letter-spacing: -0.045em;
-  line-height: 1;
+  line-height: 1.02;
   text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35);
 }
 
 .lead {
-  margin-top: 24px;
+  margin-top: var(--gap);
   max-width: 34em;
-  font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+  font-size: clamp(0.95rem, min(1.6vw, 2.5svh), 1.3rem);
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.82);
 }
 
@@ -178,8 +188,9 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 36px;
+  margin-top: calc(var(--gap) * 1.3);
 }
+.ctas :global(.btn) { height: clamp(44px, 6.6svh, 52px); }
 .primary { background: #fff; color: #111; }
 .primary:hover { background: #fff; box-shadow: 0 12px 32px -8px rgba(232, 88, 10, 0.55); }
 .glass {
@@ -192,23 +203,24 @@
 .glass:hover { background: rgba(255, 255, 255, 0.18); }
 
 .note {
-  margin-top: 14px;
-  font-size: 15px;
+  margin-top: clamp(6px, 1.4svh, 14px);
+  font-size: 14.5px;
   color: rgba(255, 255, 255, 0.65);
 }
 
 .stats {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px 48px;
-  margin-top: clamp(40px, 7vh, 72px);
-  padding-top: 26px;
+  gap: 12px 44px;
+  margin-top: calc(var(--gap) * 1.6);
+  padding-top: var(--gap);
   border-top: 1px solid rgba(255, 255, 255, 0.18);
   max-width: 640px;
 }
-.stats div { display: flex; flex-direction: column-reverse; }
+/* number above label; numbers stay on one line even when a label wraps */
+.stats div { display: flex; flex-direction: column-reverse; justify-content: flex-end; }
 .stats dd {
-  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-size: clamp(1.3rem, min(3vw, 4.4svh), 2.4rem);
   font-weight: 600;
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -219,20 +231,20 @@
   display: block;
   width: 24px;
   height: 3px;
-  margin-top: 8px;
+  margin-top: clamp(4px, 0.8svh, 8px);
   border-radius: 2px;
   background: #e8580a;
 }
-.stats dt { margin-top: 8px; font-size: 14px; color: rgba(255, 255, 255, 0.7); }
+.stats dt { margin-top: 6px; font-size: 13.5px; line-height: 1.3; color: rgba(255, 255, 255, 0.7); }
 
 /* ── Scroll cue ── */
 .cue {
   position: absolute;
   left: 50%;
-  bottom: 22px;
-  width: 44px;
-  height: 44px;
-  margin-left: -22px;
+  bottom: clamp(8px, 2svh, 22px);
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
   display: grid;
   place-items: center;
   border-radius: 50%;
@@ -245,8 +257,27 @@
   50% { transform: translateY(6px); }
 }
 
+.callText { display: inline; }
+
+/* ── Short screens: less important lines step aside so everything fits ── */
+@media (max-height: 760px) {
+  .note { display: none; }
+}
+@media (max-height: 600px) {
+  .stats { display: none; }
+}
+@media (max-height: 460px) {
+  .lead { display: none; }
+  .hero { --gap: 8px; }
+}
+
+/* ── Phones ── */
 @media (max-width: 720px) {
-  .hero { align-items: flex-end; padding-bottom: 76px; }
+  .hero {
+    align-items: flex-end;
+    padding-top: calc(var(--nav-h) + 8px);
+    padding-bottom: 50px;
+  }
   .slide img { object-position: var(--pos-m, 50% 50%); }
   .shade {
     background: linear-gradient(180deg, rgba(10, 8, 6, 0.62) 0%, rgba(10, 8, 6, 0.5) 28%, rgba(10, 8, 6, 0.86) 62%, rgba(10, 8, 6, 0.96) 100%);
@@ -254,8 +285,21 @@
   [dir="rtl"] .shade {
     background: linear-gradient(180deg, rgba(10, 8, 6, 0.62) 0%, rgba(10, 8, 6, 0.5) 28%, rgba(10, 8, 6, 0.86) 62%, rgba(10, 8, 6, 0.96) 100%);
   }
-  .ctas :global(.btn) { width: 100%; }
-  .stats { gap: 16px 28px; }
+  .title { max-width: none; }
+  /* WhatsApp button + compact round call button on one row */
+  .ctas { flex-wrap: nowrap; gap: 10px; }
+  .primary { flex: 1; min-width: 0; padding: 0 14px; }
+  .glass { flex: 0 0 auto; width: clamp(44px, 6.6svh, 52px); padding: 0; }
+  .callText { display: none; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px 14px;
+  }
+  .stats dt { font-size: 12.5px; }
   .cue { display: none; }
-  .controls { bottom: 18px; }
+  .controls { bottom: 10px; }
+}
+@media (max-width: 720px) and (max-height: 600px) {
+  .stats { display: none; }
 }

@@ -190,9 +190,10 @@ export default function Hero() {
             <WhatsAppIcon size={18} />
             {t.hero.cta}
           </a>
-          <a href={telLink} className={`btn ${styles.glass}`}>
+          {/* On phones this becomes a round icon button (saves a row); the label keeps the number for screen readers */}
+          <a href={telLink} className={`btn ${styles.glass}`} aria-label={`${t.contact.call} ${BUSINESS.contact.phoneDisplay}`}>
             <Phone size={17} aria-hidden="true" />
-            <span dir="ltr">{BUSINESS.contact.phoneDisplay}</span>
+            <span className={styles.callText} dir="ltr">{BUSINESS.contact.phoneDisplay}</span>
           </a>
         </div>
         <p className={styles.note}>{t.hero.note}</p>
