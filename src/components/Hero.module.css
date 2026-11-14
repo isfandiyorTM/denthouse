@@ -271,20 +271,50 @@
   .hero { --gap: 8px; }
 }
 
+/* ── Tall screens (phones, upright tablets): "poster" layout ──
+ * The photos are landscape (3:2). Stretched over a tall screen they'd be
+ * blown up ~3x and only a third of each photo would show (blurry). Instead
+ * the photo sits in the top half at a natural crop and fades into the dark
+ * background; the text sits below it. */
+@media (max-width: 720px), (orientation: portrait) and (max-width: 1100px) {
+  .hero { align-items: flex-end; }
+  .media {
+    inset: 0 0 auto 0;
+    height: clamp(260px, 52svh, 100vw);
+    transform: none !important; /* no parallax: it would crop the photo further */
+    -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 70%, transparent 100%);
+  }
+  .slide img { transform-origin: 50% 50%; }
+  .active img { animation-name: kenburnsSoft; }
+  .shade,
+  [dir="rtl"] .shade {
+    background: linear-gradient(180deg,
+      rgba(10, 8, 6, 0.5) 0%, rgba(10, 8, 6, 0) 13%, rgba(10, 8, 6, 0.15) 24%,
+      rgba(10, 8, 6, 0.75) 36%, rgba(10, 8, 6, 0.92) 46%, #120d09 56%);
+  }
+}
+@keyframes kenburnsSoft {
+  from { transform: scale(1.06); }
+  to { transform: scale(1); }
+}
+
 /* ── Phones ── */
 @media (max-width: 720px) {
   .hero {
-    align-items: flex-end;
     padding-top: calc(var(--nav-h) + 8px);
     padding-bottom: 50px;
   }
   .slide img { object-position: var(--pos-m, 50% 50%); }
-  .shade {
-    background: linear-gradient(180deg, rgba(10, 8, 6, 0.62) 0%, rgba(10, 8, 6, 0.5) 28%, rgba(10, 8, 6, 0.86) 62%, rgba(10, 8, 6, 0.96) 100%);
-  }
+  /* phones keep the photo clear down to about a third of the screen */
+  .shade,
   [dir="rtl"] .shade {
-    background: linear-gradient(180deg, rgba(10, 8, 6, 0.62) 0%, rgba(10, 8, 6, 0.5) 28%, rgba(10, 8, 6, 0.86) 62%, rgba(10, 8, 6, 0.96) 100%);
+    background: linear-gradient(180deg,
+      rgba(10, 8, 6, 0.5) 0%, rgba(10, 8, 6, 0) 14%, rgba(10, 8, 6, 0) 30%,
+      rgba(10, 8, 6, 0.62) 40%, rgba(10, 8, 6, 0.92) 50%, #120d09 60%);
   }
+  /* the paragraph is repeated in the cards right below; dropping it here keeps the photo visible */
+  .lead { display: none; }
   .title { max-width: none; }
   /* WhatsApp button + compact round call button on one row */
   .ctas { flex-wrap: nowrap; gap: 10px; }

@@ -22,10 +22,12 @@ export const HERO_SLIDES = [
 export const slideSrcSet = (s) => s.widths.map((w) => `/images/hero/slide-${s.n}-${w}.webp ${w}w`).join(", ");
 export const slideSrc = (s) => `/images/hero/slide-${s.n}-${s.widths[s.widths.length - 1]}.webp`;
 
-// Phones show the photo cropped to their tall screen, so they need it wider than
-// the screen. This deliberately asks for a bit less than "perfect" on phones:
-// under the dark overlay it still looks sharp, and it downloads much less.
-export const SLIDE_SIZES = "(max-aspect-ratio: 3/2) 75vh, 100vw";
+// How wide each photo is drawn, so the browser downloads the right file:
+// - phones: the photo box in the top half is drawn up to 1.5x the screen width
+// - upright tablets: drawn full width
+// - other screens narrower than 3:2: the cover crop makes it wider than the screen
+export const SLIDE_SIZES =
+  "(max-width: 720px) 150vw, (orientation: portrait) and (max-width: 1100px) 100vw, (max-aspect-ratio: 3/2) 171vh, 100vw";
 
 // How long each photo stays (ms). Must match the progress bar in Hero.module.css.
 export const SLIDE_MS = 6500;
