@@ -1,101 +1,102 @@
 .card {
-  background: #141416;
-  border: 1px solid #1e1e1e;
-  border-radius: 14px;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--line);
   overflow: hidden;
-  cursor: pointer;
-  transition: border-color 0.2s, transform 0.2s;
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.3s, box-shadow 0.3s;
 }
-.card:hover { border-color: #E8580A; transform: translateY(-2px); }
+.card:hover { transform: translateY(-4px); border-color: var(--line-strong); box-shadow: var(--shadow); }
 
-/* Thumbnail */
 .thumb {
   position: relative;
-  background: #0a0a0c;
-  height: 170px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #0f1114;
+  border-radius: 0;
 }
+.thumb:focus-visible { outline-offset: -3px; border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.card:hover .img { transform: scale(1.04); }
+
+.shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 45%, rgba(0, 0, 0, 0.55));
+  transition: background 0.3s;
+}
+
+.play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 60px;
+  height: 60px;
+  margin: -30px 0 0 -30px;
+  display: grid;
+  place-items: center;
+  padding-left: 3px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  color: #0b0c0e;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), background 0.3s, color 0.3s;
+}
+.card:hover .play { transform: scale(1.1); background: #e8580a; }
 
 .badges {
   position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
+  left: 12px;
+  bottom: 12px;
   display: flex;
-  justify-content: space-between;
+  gap: 6px;
 }
-
-.catBadge, .baBadge {
-  font-size: 10px;
-  font-weight: 700;
-  padding: 3px 9px;
-  border-radius: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.catBadge {
-  background: rgba(232,88,10,0.15);
-  color: #E8580A;
-  border: 1px solid rgba(232,88,10,0.3);
-}
-
-.baBadge {
-  background: rgba(255,255,255,0.08);
-  color: #888;
-}
-
-.playBtn {
-  width: 48px;
-  height: 48px;
-  background: rgba(232,88,10,0.9);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  font-size: 16px;
-  padding-left: 3px;
-}
-
-/* Body */
-.body { padding: 14px; }
-
-.title {
-  font-size: 14px;
-  font-weight: 600;
-  color: #f0f0f0;
-  margin-bottom: 5px;
-  line-height: 1.4;
-}
-
-.model {
-  font-size: 11px;
-  color: #555;
-  margin-bottom: 7px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.dot { color: #E8580A; font-size: 9px; }
-
-.desc {
+.badge {
+  padding: 4px 10px;
+  border-radius: 999px;
   font-size: 12px;
-  color: #666;
-  line-height: 1.5;
+  font-weight: 650;
+  color: #fff;
+  background: rgba(10, 11, 13, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+.badgeAccent { background: #e8580a; color: #0b0c0e; border-color: transparent; }
+
+.sample {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #0b0c0e;
+  background: #fbbf24;
 }
 
-.footer {
+.body { padding: 18px 20px 20px; }
+.title {
+  font-size: 1.08rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin-bottom: 6px;
+}
+.meta {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 12px;
-  padding-top: 11px;
-  border-top: 1px solid #1e1e1e;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  font-size: 14px;
+  color: var(--text-3);
 }
-
-.date  { font-size: 11px; color: #444; }
-.watch { font-size: 12px; color: #E8580A; font-weight: 500; }
+.area { display: inline-flex; align-items: center; gap: 4px; }

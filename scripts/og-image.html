@@ -1,0 +1,84 @@
+<!doctype html>
+<!--
+  Social preview image (shown when the site link is shared on WhatsApp,
+  Instagram, Facebook, X…). Regenerate public/og-image.png after changing
+  the business name or headline:
+
+  "C:\Program Files\Google\Chrome\Application\chrome.exe" --headless=new --hide-scrollbars ^
+    --window-size=1200,630 --virtual-time-budget=5000 ^
+    --screenshot=public\og-image.png scripts\og-image.html
+-->
+<html>
+<head>
+<meta charset="utf-8" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=block" />
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    font-family: "Archivo", system-ui, sans-serif;
+    background: radial-gradient(60% 80% at 85% 20%, rgba(232, 88, 10, 0.28), transparent 70%), #0b0c0e;
+    color: #f4f4f5;
+    display: grid;
+    grid-template-columns: 1fr 470px;
+    align-items: center;
+    gap: 40px;
+    padding: 64px 64px 64px 72px;
+  }
+  .logo { display: flex; align-items: center; gap: 14px; font-weight: 800; font-stretch: 118%; font-size: 34px; letter-spacing: -0.03em; }
+  .logo span { color: #ff7a33; }
+  .kicker { margin-top: 54px; font-size: 22px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #ff7a33; }
+  h1 { margin-top: 16px; font-size: 76px; font-weight: 850; font-stretch: 116%; letter-spacing: -0.045em; line-height: 0.95; }
+  h1 em { font-style: normal; background: linear-gradient(95deg, #e8580a, #ff8a3d 55%, #ffc08a); -webkit-background-clip: text; color: transparent; }
+  .sub { margin-top: 30px; font-size: 24px; color: #b9bcc3; }
+  .panel { position: relative; height: 470px; border-radius: 28px; overflow: hidden; border: 1px solid rgba(255,255,255,.16); box-shadow: 0 40px 80px -20px rgba(0,0,0,.8); }
+  .panel svg { display: block; width: 100%; height: 100%; }
+  .tag { position: absolute; top: 18px; padding: 6px 12px; border-radius: 99px; font-size: 14px; font-weight: 700; letter-spacing: .14em; color: #fff; background: rgba(10,11,13,.65); border: 1px solid rgba(255,255,255,.14); }
+  .tag.b { left: 18px; } .tag.a { right: 18px; background: #e8580a; color: #0b0c0e; border-color: transparent; }
+</style>
+</head>
+<body>
+  <div>
+    <div class="logo">
+      <svg width="56" height="56" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#E8580A"/><g fill="none" stroke="#0b0c0e" stroke-width="2.6" stroke-linecap="round"><path d="M7 9.5h18"/><path d="M7 16h4.2c2.2 0 2.6 3.6 4.8 3.6s2.6-3.6 4.8-3.6H25"/><path d="M7 23h18"/></g></svg>
+      <div>Dent<span>House</span></div>
+    </div>
+    <p class="kicker">Paintless Dent Repair · Dubai</p>
+    <h1>Dents out.<br /><em>Factory paint</em> stays.</h1>
+    <p class="sub">No filler · No respray · Mobile service across Dubai</p>
+  </div>
+  <div class="panel">
+    <svg id="board" viewBox="0 0 470 470" preserveAspectRatio="xMidYMid slice"></svg>
+    <span class="tag b">BEFORE</span><span class="tag a">AFTER</span>
+  </div>
+<script>
+  // Same reflection-line maths as src/components/LineBoard.jsx
+  const W = 470, H = 470, dent = { x: 150, y: 240, s: 80, pinch: 0.55, wave: 26 }, count = 12;
+  function paths(k) {
+    const out = [], gap = (H - 60) / (count - 1), s2 = 2 * dent.s * dent.s;
+    for (let i = 0; i < count; i++) {
+      const y0 = 30 + i * gap; let d = "";
+      for (let x = -10; x <= W + 10; x += 6) {
+        const nx = (x - W / 2) / (W / 2), bow = 14 * nx * nx + 5 * nx, dx = x - dent.x, dy = y0 - dent.y;
+        const g = Math.exp(-(dx * dx + dy * dy) / s2);
+        d += (x === -10 ? "M" : "L") + x + " " + (y0 + bow + k * (-dent.pinch * dy * g + dent.wave * (dx / dent.s) * g)).toFixed(1);
+      }
+      out.push(`<path d="${d}"/>`);
+    }
+    return { svg: out.join(""), stroke: gap * 0.34 };
+  }
+  const a = paths(0), b = paths(1), mid = W * 0.55;
+  document.getElementById("board").innerHTML = `
+    <defs>
+      <linearGradient id="p" x1="0" y1="0" x2=".3" y2="1"><stop offset="0" stop-color="#262a31"/><stop offset=".55" stop-color="#14171b"/><stop offset="1" stop-color="#0a0b0d"/></linearGradient>
+      <linearGradient id="s" gradientUnits="userSpaceOnUse" x1="0" x2="${W}"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".42" stop-color="#fff" stop-opacity=".96"/><stop offset="1" stop-color="#fff" stop-opacity=".35"/></linearGradient>
+      <clipPath id="c"><rect width="${mid}" height="${H}"/></clipPath>
+    </defs>
+    <rect width="${W}" height="${H}" fill="url(#p)"/>
+    <g fill="none" stroke="url(#s)" stroke-width="${a.stroke}">${a.svg}</g>
+    <g clip-path="url(#c)"><rect width="${W}" height="${H}" fill="url(#p)"/><g fill="none" stroke="url(#s)" stroke-width="${b.stroke}">${b.svg}</g></g>
+    <line x1="${mid}" x2="${mid}" y2="${H}" stroke="#E8580A" stroke-width="4"/>
+    <circle cx="${mid}" cy="${H / 2}" r="22" fill="#E8580A"/>`;
+</script>
+</body>
+</html>

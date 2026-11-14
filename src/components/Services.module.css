@@ -1,0 +1,93 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  isolation: isolate;
+  transition: border-color 0.3s, transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.3s;
+}
+/* line-board stripes appear on hover */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: repeating-linear-gradient(180deg, var(--accent-soft) 0 2px, transparent 2px 22px);
+  mask-image: radial-gradient(80% 70% at 100% 0%, #000, transparent 70%);
+  -webkit-mask-image: radial-gradient(80% 70% at 100% 0%, #000, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.card:hover { border-color: var(--accent-line); transform: translateY(-4px); box-shadow: var(--shadow); }
+.card:hover::before { opacity: 1; }
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 26px;
+}
+.icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  border: 1px solid var(--accent-line);
+  transition: background 0.3s, color 0.3s;
+}
+.card:hover .icon { background: var(--accent); color: var(--on-accent); }
+.num {
+  font-size: 13px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-3);
+  letter-spacing: 0.08em;
+}
+
+.title {
+  font-size: 1.28rem;
+  font-weight: 750;
+  font-stretch: 108%;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.text { color: var(--text-2); font-size: 15px; flex: 1; }
+.link { margin-top: 22px; }
+/* whole card clickable */
+.link::after { content: ""; position: absolute; inset: 0; }
+
+.note {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 28px;
+  padding: 18px 22px;
+  border-radius: var(--radius);
+  border: 1px dashed var(--line-strong);
+  color: var(--text-2);
+  font-size: 15px;
+}
+.note svg { flex-shrink: 0; margin-top: 2px; color: var(--accent-text); }
+.note strong { color: var(--text); font-weight: 650; }
+
+@media (max-width: 960px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+  .card { padding: 24px; }
+  .top { margin-bottom: 18px; }
+}

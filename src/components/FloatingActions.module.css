@@ -1,0 +1,74 @@
+.fab,
+.bar {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0.3s;
+}
+.show { visibility: visible; opacity: 1; transform: none !important; }
+
+.fab {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 40;
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--wa);
+  color: #fff;
+  box-shadow: 0 12px 30px -6px rgba(37, 211, 102, 0.55), 0 4px 12px rgba(0, 0, 0, 0.25);
+  transform: translateY(20px) scale(0.8);
+}
+.fab:hover { transform: scale(1.06) !important; }
+.tip {
+  position: absolute;
+  right: calc(100% + 12px);
+  white-space: nowrap;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 650;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.2s, transform 0.2s;
+  pointer-events: none;
+}
+.fab:hover .tip,
+.fab:focus-visible .tip { opacity: 1; transform: none; }
+
+.bar {
+  display: none;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 40;
+  gap: 10px;
+  padding: 10px var(--gutter) calc(10px + env(safe-area-inset-bottom));
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--line);
+  transform: translateY(100%);
+}
+.bar a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 50px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 15px;
+}
+.call { flex: 0 0 36%; border: 1px solid var(--line-strong); color: var(--text); }
+.wa { flex: 1; background: var(--wa); color: #06210f; }
+
+@media (max-width: 720px) {
+  .fab { display: none; }
+  .bar { display: flex; }
+}

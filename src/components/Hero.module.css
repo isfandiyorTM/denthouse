@@ -1,0 +1,172 @@
+.hero {
+  position: relative;
+  padding-top: calc(var(--nav-h) + clamp(32px, 6vw, 80px));
+  padding-bottom: clamp(40px, 6vw, 72px);
+  overflow: hidden;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 78% 30%, rgba(232, 88, 10, 0.16), transparent 70%),
+    radial-gradient(40% 40% at 10% 0%, rgba(255, 255, 255, 0.04), transparent 70%);
+}
+.bg::after {
+  /* faint line-board stripes behind everything */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(180deg, var(--line) 0 1px, transparent 1px 56px);
+  mask-image: radial-gradient(70% 60% at 60% 30%, #000 10%, transparent 75%);
+  -webkit-mask-image: radial-gradient(70% 60% at 60% 30%, #000 10%, transparent 75%);
+}
+
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 7px 14px 7px 12px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--text-2);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  margin-bottom: 26px;
+}
+.statusSep {
+  width: 1px;
+  height: 12px;
+  background: var(--line-strong);
+}
+
+.title { margin-bottom: 22px; }
+.kicker {
+  display: block;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  margin-bottom: 14px;
+}
+.big {
+  display: block;
+  font-size: clamp(2.9rem, 6.6vw, 5.6rem);
+  font-weight: 850;
+  font-stretch: 116%;
+  letter-spacing: -0.045em;
+  line-height: 0.92;
+}
+.big em {
+  font-style: normal;
+  color: var(--accent-text);
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+.lead {
+  font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+  color: var(--text-2);
+  max-width: 52ch;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.ticks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 26px;
+  font-size: 14px;
+  font-weight: 550;
+  color: var(--text-2);
+}
+.ticks li { display: inline-flex; align-items: center; gap: 7px; }
+.ticks svg { color: var(--ok); }
+
+/* Visual */
+.visual { position: relative; }
+.frame {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.7), 0 0 0 8px color-mix(in srgb, var(--surface) 60%, transparent);
+  transform: perspective(1400px) rotateY(-4deg) rotateX(2deg);
+  transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.visual:hover .frame { transform: none; }
+
+.caption {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+  max-width: 46ch;
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--text-3);
+}
+.caption svg { flex-shrink: 0; margin-top: 2px; color: var(--accent-text); }
+.caption strong { color: var(--text); font-weight: 650; }
+
+/* Stats */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: clamp(48px, 7vw, 88px);
+  border-top: 1px solid var(--line);
+}
+.stat {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 6px;
+  padding: 26px 24px 0 0;
+}
+.stat + .stat { padding-left: 24px; border-left: 1px solid var(--line); }
+.statValue {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  font-weight: 800;
+  font-stretch: 112%;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.statValue svg { color: #fbbf24; }
+.statLabel { font-size: 13.5px; color: var(--text-3); }
+
+@media (max-width: 960px) {
+  .grid { grid-template-columns: 1fr; }
+  .frame { transform: none; }
+  .visual { max-width: 640px; }
+}
+@media (max-width: 720px) {
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat:nth-child(3) { padding-left: 0; border-left: 0; }
+  .stat:nth-child(n + 3) { border-top: 1px solid var(--line); margin-top: 22px; }
+}
+@media (max-width: 480px) {
+  .ctas :global(.btn) { width: 100%; font-size: 15px; padding: 0 18px; }
+}

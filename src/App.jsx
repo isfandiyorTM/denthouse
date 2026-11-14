@@ -1,48 +1,45 @@
-import { useState } from "react";
-import Navbar  from "./components/Navbar";
-import Footer  from "./components/Footer";
-import Home    from "./pages/Home";
-import Admin   from "./pages/Admin";
-import { useVideos } from "./hooks/useVideos";
-import { useAdmin  } from "./hooks/useAdmin";
+// Global styles first, so component (module) styles can override them.
 import "./styles/global.css";
+import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
+import BrandMarquee from "./components/BrandMarquee";
+import Services from "./components/Services";
+import Work from "./components/Work";
+import WhyPdr from "./components/WhyPdr";
+import Process from "./components/Process";
+import About from "./components/About";
+import Reviews from "./components/Reviews";
+import Areas from "./components/Areas";
+import Faq from "./components/Faq";
+import Contact from "./components/Contact";
+import Footer from "./components/Footer";
+import FloatingActions from "./components/FloatingActions";
+import { useReveal } from "./hooks/useReveal";
+import { useLeadTracking } from "./hooks/useLeadTracking";
 
 export default function App() {
-  const [view, setView] = useState("home"); // "home" | "admin"
-
-  const { videos, addVideo, updateVideo, deleteVideo } = useVideos();
-  const { loggedIn, error, login, logout }             = useAdmin();
-
-  function handleLogout() {
-    logout();
-    setView("home");
-  }
+  useReveal();
+  useLeadTracking();
 
   return (
-    <div>
-      <Navbar
-        view={view}
-        onViewChange={setView}
-        adminLoggedIn={loggedIn}
-        onLogout={handleLogout}
-      />
-
-      {view === "home" ? (
-        <Home videos={videos} />
-      ) : (
-        <Admin
-          loggedIn={loggedIn}
-          loginError={error}
-          onLogin={login}
-          onLogout={handleLogout}
-          videos={videos}
-          onAdd={addVideo}
-          onUpdate={updateVideo}
-          onDelete={deleteVideo}
-        />
-      )}
-
-      <Footer adminMode={view === "admin"} />
-    </div>
+    <>
+      <a href="#main" className="skip-link">Skip to content</a>
+      <Navbar />
+      <main id="main">
+        <Hero />
+        <BrandMarquee />
+        <Services />
+        <Work />
+        <WhyPdr />
+        <Process />
+        <About />
+        <Reviews />
+        <Areas />
+        <Faq />
+        <Contact />
+      </main>
+      <Footer />
+      <FloatingActions />
+    </>
   );
 }
