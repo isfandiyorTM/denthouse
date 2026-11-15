@@ -1,13 +1,13 @@
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, CreditCard, Mail, MapPin, Navigation, Phone } from "lucide-react";
 import { BUSINESS } from "../data/business";
 import { areasFor } from "../data/areas";
 import { useI18n } from "../i18n/context";
-import { hoursRows, mailLink, telLink, waLink } from "../lib/helpers";
+import { fullAddress, hoursRows, mailLink, mapsSearchUrl, telLink, waLink } from "../lib/helpers";
 import OpenStatus from "./OpenStatus";
 import { WhatsAppIcon } from "./icons";
 import styles from "./Contact.module.css";
 
-/** Mobile service: no workshop address or map — we show where he goes instead. */
+/** Mobile service: where he goes, his base, hours, phone, email, payment. */
 export default function Contact() {
   const { lang, t } = useI18n();
   const { contact } = BUSINESS;
@@ -43,6 +43,16 @@ export default function Contact() {
               </div>
             </div>
             <div className={styles.row}>
+              <Navigation size={18} aria-hidden="true" />
+              <div>
+                <dt>{c.base}</dt>
+                <dd>
+                  <address className={styles.address}>{fullAddress()}</address>
+                  <a className="text-link" href={mapsSearchUrl()} target="_blank" rel="noopener noreferrer">{c.baseMap}</a>
+                </dd>
+              </div>
+            </div>
+            <div className={styles.row}>
               <Clock size={18} aria-hidden="true" />
               <div>
                 <dt>{c.hours}</dt>
@@ -68,6 +78,13 @@ export default function Contact() {
               <div>
                 <dt>{c.email}</dt>
                 <dd><a href={mailLink} dir="ltr">{contact.email}</a></dd>
+              </div>
+            </div>
+            <div className={styles.row}>
+              <CreditCard size={18} aria-hidden="true" />
+              <div>
+                <dt>{c.payment}</dt>
+                <dd>{c.paymentValue}</dd>
               </div>
             </div>
           </dl>

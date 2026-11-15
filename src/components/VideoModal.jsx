@@ -8,8 +8,11 @@ import styles from "./VideoModal.module.css";
 
 function Player({ src, poster, title, vertical, autoPlay = true }) {
   const yt = youtubeId(src);
+  // Size the player to the video's real shape (square / vertical / wide), read from the file.
+  const [ratio, setRatio] = useState(null);
+  const style = ratio ? { aspectRatio: String(ratio), width: `min(100%, calc(70vh * ${ratio.toFixed(3)}))`, height: "auto" } : undefined;
   return (
-    <div className={cx(styles.frame, vertical && styles.vertical)}>
+    <div className={cx(styles.frame, !ratio && vertical && styles.vertical)} style={style}>
       {yt ? (
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${yt}?autoplay=${autoPlay ? 1 : 0}&rel=0&playsinline=1`}
@@ -18,7 +21,19 @@ function Player({ src, poster, title, vertical, autoPlay = true }) {
           allowFullScreen
         />
       ) : (
-        <video src={src} poster={poster} controls autoPlay={autoPlay} playsInline preload="metadata" aria-label={title} />
+        <video
+          src={src}
+          poster={poster}
+          controls
+          autoPlay={autoPlay}
+          playsInline
+          preload="metadata"
+          aria-label={title}
+          onLoadedMetadata={(e) => {
+            const v = e.currentTarget;
+            if (v.videoWidth && v.videoHeight) setRatio(v.videoWidth / v.videoHeight);
+          }}
+        />
       )}
     </div>
   );
@@ -26,7 +41,7 @@ function Player({ src, poster, title, vertical, autoPlay = true }) {
 
 export default function VideoModal({ video, onClose }) {
   const { lang, t } = useI18n();
-  const title = loc(video.title, lang);
+  const title = loc(video.title, lang) || t.work.videoTitle;
   const dialogRef = useRef(null);
   const closeRef = useRef(null);
   const onCloseRef = useRef(onClose);

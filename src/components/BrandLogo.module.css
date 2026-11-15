@@ -6,8 +6,9 @@
   line-height: 0;
 }
 .mark {
-  width: calc(var(--logo-h) * 2.55);
+  width: calc(var(--logo-h) * 2.9);
   height: auto;
+  border-radius: 50%;
   flex-shrink: 0;
 }
 .words {

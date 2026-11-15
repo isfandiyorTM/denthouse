@@ -9,7 +9,7 @@ export default ({ name }) => ({
     title: `Mobile Paintless Dent Repair in Dubai & Sharjah | ${name}`,
     description:
       "Mobile paintless dent repair (PDR) in Dubai and Sharjah. We come to your home, office or parking and remove door dings, " +
-      "body dents, minor creases and hail damage without repainting. WhatsApp a photo for a free quote.",
+      "major and minor dents and hail damage without repainting. All car types, aluminium panels too. WhatsApp a photo for a free quote.",
   },
 
   nav: {
@@ -46,7 +46,15 @@ export default ({ name }) => ({
   work: {
     label: "Our work",
     title: "Recent repairs",
-    lead: "Short videos of real jobs. Tap a video to watch.",
+    lead: "Real photos and videos of our repairs. Tap one to see it bigger.",
+    photo: (i) => `Dent repair photo ${i}`,
+    photoAlt: (label, phase, i) =>
+      label || phase ? `${label ? `${label}, ` : ""}${phase ? `${phase} paintless dent repair` : "paintless dent repair"}` : `Dent repair photo ${i}`,
+    beforeAfter: "Before / After",
+    videoTitle: "Dent repair",
+    showAllPhotos: (n) => `Show all ${n} photos`,
+    photoOpen: (i) => `Open photo ${i}`,
+    gallery: { close: "Close photo", prev: "Previous photo", next: "Next photo", count: (i, n) => `${i} / ${n}` },
     instagram: "More on Instagram",
     showAll: (n) => `Show all ${n} repairs`,
     sample: "Sample",
@@ -60,10 +68,8 @@ export default ({ name }) => ({
     unsure: ["Not sure?", "Send us a photo", "and we'll tell you honestly."],
     items: [
       { id: "door-dings", title: "Door dings", text: "Small dents from car parks and car doors. Usually fixed while you wait." },
-      { id: "body-dents", title: "Body dents", text: "Dents on doors, fenders, bonnet and roof, pushed out from behind the panel." },
       { id: "hail", title: "Hail damage", text: "Many small dents on the roof, bonnet and boot after a storm." },
-      { id: "creases", title: "Minor creases", text: "Small sharp lines and creases on body panels." },
-      { id: "lease-return", title: "Before lease return or sale", text: "Remove dents before the inspection and avoid damage charges." },
+      { id: "dents", title: "Major and minor dents", text: "From small dents to big ones on doors, fenders, bonnet and roof, pushed out from behind the panel." },
       { id: "mobile", title: "Mobile service", text: "We come to your home, office or parking anywhere in Dubai and Sharjah." },
     ],
   },
@@ -88,7 +94,7 @@ export default ({ name }) => ({
       "If a dent can't be fixed this way, I'll tell you before any work starts.",
     ],
     // Only list things that are true. TODO: confirm.
-    credentials: ["Steel and aluminium panels", "Hail damage", "All car brands, including luxury cars and EVs"],
+    credentials: ["Steel and aluminium panels", "Hail damage", "All types of cars, including luxury cars"],
   },
 
   reviews: {
@@ -108,7 +114,8 @@ export default ({ name }) => ({
       { q: "Can every dent be fixed?", a: "Most dents can, as long as the paint is not cracked. If yours can't, we'll tell you before we start." },
       { q: "How long does it take?", a: "Most repairs take 1 to 3 hours. Large hail damage can take longer." },
       { q: "Do you come to my location?", a: "Yes, we are a mobile service. We come to homes, offices and parking areas anywhere in Dubai and Sharjah." },
-      { q: "Can you fix dents before I return a leased car?", a: "Yes. It is usually much cheaper than the damage charge at the return inspection." },
+      { q: "Do you repair aluminium panels and luxury cars?", a: "Yes. We repair steel and aluminium panels on all types of cars, including luxury cars." },
+      { q: "How can I pay?", a: "Cash, card or bank transfer, whatever is easiest for you." },
     ],
   },
 
@@ -120,6 +127,10 @@ export default ({ name }) => ({
     call: "Call us",
     area: "Service area",
     areaValue: "All of Dubai and Sharjah. We come to you.",
+    base: "Our base",
+    baseMap: "Open in Google Maps",
+    payment: "Payment",
+    paymentValue: "Cash, card or bank transfer",
     hours: "Opening hours",
     phone: "Phone",
     email: "Email",

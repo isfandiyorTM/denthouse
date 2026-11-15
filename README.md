@@ -38,39 +38,28 @@ Google structured data are all generated from it.
 
 ## Logo
 
-All logo files are in [`brand/`](brand/):
+His logo (the gold round "MD" badge) is in [`brand/`](brand/):
 
-| File | Use it for |
+| File | Use |
 |---|---|
-| `master-dent-profile-picture.png` | WhatsApp, Instagram, Google Maps profile picture (fits the circle crop) |
-| `master-dent-logo-dark-bg.svg` / `.png` | Horizontal logo on dark backgrounds (car stickers, black shirts, videos) |
-| `master-dent-logo-light-bg.svg` / `.png` | Horizontal logo on white (invoices, documents) |
-| `master-dent-logo-stacked.svg` / `.png` | Badge above the name, for square posts and print |
-| `master-dent-mark.svg` / `.png` | The round MD badge on its own |
-| `master-dent-app-icon.svg` | Square app icon (browser tab / phone home screen versions are in `public/`) |
+| `master-dent-logo-original.png` | The original file he made |
+| `master-dent-logo-circle.png` | Round cut-out with a transparent background |
 
-Give printers the **SVG** files: they are vectors and stay sharp at any size.
-Colours: gold `#D9B56A` (deep `#A2762F`, light `#F8E4A8`), silver `#D3D7DC`, black `#0E0C0A`.
-Lettering: Archivo Expanded SemiBold and Geist SemiBold (both free, SIL Open Font License),
-already converted to shapes, so no fonts are needed to use the files.
+The website uses resized copies in `public/images/logo/`. The browser-tab and phone
+home-screen icons (`public/favicon.ico`, `favicon-64.png`, `apple-touch-icon.png`,
+`icon-512.png`) use just the "MD" part, because the full badge is unreadable at 16 px.
+The lettering next to the badge in the navbar ("MASTER DENT / PAINTLESS DENT REPAIR") is drawn
+from `src/components/logoArt.js`. Accent colour: gold `#D9B56A` (`#8A6A2E` on white).
 
 ## 2. Languages and colours
 
-The site comes in **English** (`/`), **Arabic** (`/ar/`, right-to-left), **Russian** (`/ru/`) and
-**Hindi** (`/hi/`). Each one is its own prerendered page with its own title, description and
-Google data, so the Arabic page can rank for Arabic searches.
-
-- All page text is in [`src/i18n/`](src/i18n/): `en.js`, `ar.js`, `ru.js`, `hi.js`. Every file has
-  the same structure, so to change a sentence, change it in each file.
-- **Have a native speaker read the Arabic, Russian and Hindi once before launch.**
-- First-time visitors whose phone is set to Arabic, Russian or Hindi are sent to that language
-  automatically. A choice made in the language menu (globe icon) is remembered and always wins.
-- To add a language (e.g. Urdu): copy `en.js` to `ur.js`, translate it, and add one line to
-  `LANGS` in [`src/i18n/index.js`](src/i18n/index.js).
-- Video titles and reviews can be one language, or `{ en: "…", ar: "…" }` for several.
+The site is in **English** (his customers speak English). Arabic, Russian and Hindi versions
+exist in [`src/i18n/`](src/i18n/) but are switched off: to turn one on, update its text
+(services, contact) and add its code to `ENABLED` in [`src/i18n/index.js`](src/i18n/index.js).
+All page text is in `src/i18n/en.js`.
 
 Light and dark colours follow the visitor's phone or computer setting automatically. The
-sun / moon button in the header lets visitors choose; their choice is remembered on every page.
+sun / moon button in the header lets visitors choose; their choice is remembered.
 
 ### Hero slideshow
 
@@ -83,19 +72,17 @@ To add or replace a photo: export it as WebP at 960, 1600 and 1920 px wide (as l
 original allows, around 30–70 kB each), name it `slide-<number>-<width>.webp`, and add a line to
 `heroSlides.js`. Use the photographer's own photos, or photos you have a license for.
 
-## 3. Videos
+## 3. Photos and videos of his work
 
-Edit [`src/data/videos.js`](src/data/videos.js). The six entries there now are **samples**:
-they show a yellow "Sample" badge and play a placeholder clip. Replace them with real repairs.
+No code needed: drop files into these folders and they appear in "Our work", newest file name first.
 
-Each video can be:
-- **an MP4** in `public/videos/` (`video: "/videos/patrol-hail.mp4"`), or
-- **a YouTube link**, including Shorts (`video: "https://youtube.com/shorts/…"`), or
-- **two clips** (`before` + `after`), which adds a Before / After / Side-by-side view.
+- **Photos** → `public/images/dent/` (jpg / png / webp). Shown as a grid; tap to open full screen.
+- **Videos** → `public/videos/` (MP4 best). A cover image with the same name is used if present
+  (`tesla-door.mp4` + `tesla-door.jpg`), otherwise the video's first frame.
+- Optional titles and details for videos: [`src/data/videos.js`](src/data/videos.js).
 
-Always add a `poster` (cover image, e.g. `/videos/patrol-hail.jpg`). It makes the grid load
-fast, and videos with a poster are submitted to Google Video search automatically.
-Use `vertical: true` for phone-shot / Reels videos. Keep MP4s short (15–60 s) and under ~15 MB.
+Keep videos short (15–60 s) and under ~15 MB each (1080p, H.264 MP4), and photos under ~300 kB:
+big files make the page slow on phones.
 
 ## 4. Deploy
 

@@ -3,6 +3,7 @@ import { useScrolledPast } from "../hooks/useScroll";
 import { useI18n } from "../i18n/context";
 import BrandLogo from "./BrandLogo";
 import LangSwitcher from "./LangSwitcher";
+import { LANGS } from "../i18n";
 import ThemeToggle from "./ThemeToggle";
 import { WhatsAppIcon } from "./icons";
 import styles from "./Navbar.module.css";
@@ -26,7 +27,7 @@ export default function Navbar() {
         </nav>
         <div className={styles.actions}>
           <ThemeToggle />
-          <LangSwitcher />
+          {LANGS.length > 1 && <LangSwitcher />}
           <a
             href={waLink(t.wa.quote)}
             target="_blank"

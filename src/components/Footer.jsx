@@ -33,6 +33,7 @@ export default function Footer() {
 
       <div className={`container ${styles.bottom}`}>
         <span>© <span suppressHydrationWarning>{new Date().getFullYear()}</span> {BUSINESS.legalName}</span>
+        {LANGS.length > 1 && (
         <nav aria-label={t.footer.languages} className={styles.langs}>
           {LANGS.map((l) => (
             <a
@@ -47,6 +48,7 @@ export default function Footer() {
             </a>
           ))}
         </nav>
+        )}
       </div>
     </footer>
   );

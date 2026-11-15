@@ -7,7 +7,7 @@ import { BUSINESS as B } from "./data/business.js";
 import { areasFor } from "./data/areas.js";
 import { VIDEOS } from "./data/videos.js";
 import { DEFAULT_LANG, LANGS, getT, langInfo, loc } from "./i18n/index.js";
-import { absoluteUrl, hoursSchema, youtubeId } from "./lib/helpers.js";
+import { absoluteUrl, hoursSchema, mapsSearchUrl, youtubeId } from "./lib/helpers.js";
 import { HERO_SLIDES, SLIDE_SIZES, slideSrcSet } from "./data/heroSlides.js";
 
 const root = `${B.siteUrl}/`;
@@ -45,14 +45,16 @@ function businessSchema(lang, t) {
     currenciesAccepted: "AED",
     foundingDate: String(B.foundedYear),
     availableLanguage: LANGS.map((l) => l.code),
-    // Mobile service ("service-area business"): city only, no street address or map pin.
+    // Mobile service with a base (the address on his Google Maps listing) + areas served.
     address: {
       "@type": "PostalAddress",
+      streetAddress: [B.address.street, B.address.area].filter(Boolean).join(", "),
       addressLocality: B.address.city,
       addressRegion: B.address.region,
       addressCountry: B.address.country,
     },
-    hasMap: B.googleMapsUrl || undefined,
+    hasMap: B.googleMapsUrl || mapsSearchUrl(),
+    paymentAccepted: B.payment?.join(", "),
     openingHoursSpecification: hoursSchema(),
     areaServed: [
       ...B.serviceCities.map((name) => ({ "@type": "City", name })),
@@ -173,7 +175,7 @@ export function buildHead(lang = DEFAULT_LANG) {
   const fonts = ["family=Geist:wght@400;500;600", EXTRA_FONTS[lang]].filter(Boolean).join("&");
 
   const tags = [
-    lang === DEFAULT_LANG ? autoLanguageScript() : "",
+    lang === DEFAULT_LANG && LANGS.length > 1 ? autoLanguageScript() : "",
     `<title>${esc(t.seo.title)}</title>`,
     `<meta name="description" content="${esc(t.seo.description)}" />`,
     `<link rel="canonical" href="${url}" />`,
@@ -208,8 +210,8 @@ export function buildHead(lang = DEFAULT_LANG) {
     `<meta name="theme-color" content="#0f0f0f" media="(prefers-color-scheme: dark)" />`,
     themeScript,
     `<meta name="format-detection" content="telephone=yes" />`,
-    `<link rel="icon" href="/favicon.ico" sizes="32x32" />`,
-    `<link rel="icon" href="/favicon.svg" type="image/svg+xml" />`,
+    `<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />`,
+    `<link rel="icon" href="/favicon-64.png" type="image/png" sizes="64x64" />`,
     `<link rel="apple-touch-icon" href="/apple-touch-icon.png" />`,
     `<link rel="manifest" href="/site.webmanifest" />`,
 
@@ -275,7 +277,6 @@ export function buildManifest() {
       icons: [
         { src: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
         { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
-        { src: "/favicon.svg", sizes: "any", type: "image/svg+xml" },
       ],
     },
     null,

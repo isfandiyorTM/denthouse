@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { buildHead, buildSitemap, buildRobots, buildManifest, htmlAttrs } from "./src/seo.js";
@@ -46,6 +48,53 @@ function seo() {
   };
 }
 
+/**
+ * Work media plugin: lists the files in public/images/dent (photos) and
+ * public/videos (videos) and exposes them as `import media from "virtual:work-media"`.
+ * Just drop files in those folders — no code changes needed. Newest file names first.
+ * In dev, adding or removing a file reloads the page.
+ */
+const MEDIA_DIRS = { photos: "public/images/dent", videos: "public/videos" };
+const PHOTO_EXT = /\.(jpe?g|png|webp|avif)$/i;
+const VIDEO_EXT = /\.(mp4|webm|m4v|mov)$/i;
+
+function workMedia() {
+  const id = "virtual:work-media";
+  const resolved = "\0" + id;
+  const list = (dir, ext) => {
+    const full = path.resolve(dir);
+    if (!fs.existsSync(full)) return [];
+    return fs.readdirSync(full).filter((f) => ext.test(f)).sort().reverse();
+  };
+  return {
+    name: "work-media",
+    resolveId: (source) => (source === id ? resolved : null),
+    load(source) {
+      if (source !== resolved) return null;
+      const photos = list(MEDIA_DIRS.photos, PHOTO_EXT).map((f) => `/images/dent/${f}`);
+      const posters = new Set(list(MEDIA_DIRS.videos, PHOTO_EXT));
+      const videos = list(MEDIA_DIRS.videos, VIDEO_EXT).map((f) => {
+        const base = f.replace(VIDEO_EXT, "");
+        const poster = [...posters].find((p) => p.replace(PHOTO_EXT, "") === base);
+        return { src: `/videos/${f}`, poster: poster ? `/videos/${poster}` : null, name: base };
+      });
+      return `export default ${JSON.stringify({ photos, videos })};`;
+    },
+    configureServer(server) {
+      const dirs = Object.values(MEDIA_DIRS).map((d) => path.resolve(d));
+      server.watcher.add(dirs);
+      const refresh = (file) => {
+        if (!dirs.some((d) => path.resolve(file).startsWith(d))) return;
+        const mod = server.moduleGraph.getModuleById(resolved);
+        if (mod) server.moduleGraph.invalidateModule(mod);
+        server.ws.send({ type: "full-reload" });
+      };
+      server.watcher.on("add", refresh);
+      server.watcher.on("unlink", refresh);
+    },
+  };
+}
+
 export default defineConfig({
-  plugins: [react(), seo()],
+  plugins: [react(), seo(), workMedia()],
 });

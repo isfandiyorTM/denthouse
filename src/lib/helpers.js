@@ -20,6 +20,17 @@ export function waLink(text = "") {
 export const telLink = `tel:${BUSINESS.contact.phone}`;
 export const mailLink = `mailto:${BUSINESS.contact.email}`;
 
+/** Full base address, e.g. "9th Street, Al Awir Road, Nadd Al Hamar, Dubai". */
+export function fullAddress() {
+  const { street, area, city } = BUSINESS.address;
+  return [street, area, city].filter(Boolean).join(", ");
+}
+/** Google Maps link for his base: his own listing if set, otherwise an address search. */
+export function mapsSearchUrl() {
+  if (BUSINESS.googleMapsUrl) return BUSINESS.googleMapsUrl;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${BUSINESS.name}, ${fullAddress()}`)}`;
+}
+
 export function yearsOfExperience(now = new Date()) {
   return Math.max(1, now.getFullYear() - BUSINESS.foundedYear);
 }

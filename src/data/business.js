@@ -41,12 +41,17 @@ export const BUSINESS = {
     email: "denthousepdr@gmail.com", // he may switch to uaedentspecialist@gmail.com
   },
 
-  // Mobile service only — he drives to the customer (home, office or parking),
-  // there is no workshop to visit. Google calls this a "service-area business":
-  // no street address is published, only the areas served.
+  // Mobile service — he drives to the customer (home, office or parking) anywhere in
+  // Dubai and Sharjah. His base (the address on his Google Maps listing) is below.
   // The page text ("Dubai and Sharjah") is in src/i18n/*.js; neighbourhoods in data/areas.js.
   serviceCities: ["Dubai", "Sharjah"],
-  address: { city: "Dubai", region: "Dubai", country: "AE" },
+  address: {
+    street: "9th Street, Al Awir Road",
+    area: "Nadd Al Hamar",
+    city: "Dubai",
+    region: "Dubai",
+    country: "AE",
+  },
 
   // TODO: Google Business Profile → Share → copy link (used for "All reviews on Google").
   googleMapsUrl: null,
@@ -66,7 +71,10 @@ export const BUSINESS = {
   timeZone: "Asia/Dubai",
 
   // Rough price level for Google ("$", "$$", "$$$" or e.g. "AED 150–3000").
+  // No prices on the site: customers send a photo on WhatsApp for a quote.
   priceRange: "$$",
+  // Payment methods he accepts (shown in the contact section + sent to Google).
+  payment: ["Cash", "Credit Card", "Debit Card", "Bank Transfer"],
 
   // ONLY real numbers copied from Google — never invent these.
   // e.g. rating: { value: 4.9, count: 132 }
@@ -77,7 +85,7 @@ export const BUSINESS = {
   // Full profile URLs. null = hidden. These also go into Google's "sameAs" data,
   // which links the profiles to this business.
   social: {
-    instagram: null, // TODO
+    instagram: "https://www.instagram.com/master_dent_uae/",
     tiktok: null,
     youtube: null,
     facebook: null,

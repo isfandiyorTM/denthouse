@@ -44,7 +44,7 @@
 }
 @keyframes drift { to { transform: translateY(30px); } }
 
-.emblemMark { width: clamp(52px, 6vw, 64px); height: auto; }
+.emblemMark { width: clamp(72px, 8vw, 88px); height: auto; border-radius: 50%; }
 .years {
   display: block;
   font-size: clamp(5rem, 10vw, 8rem);

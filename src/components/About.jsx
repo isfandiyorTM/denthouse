@@ -22,7 +22,7 @@ export default function About() {
         ) : (
           // Until there's a photo of him: a branded card instead of an empty box.
           <div className={styles.emblem} data-reveal="clip" aria-hidden="true">
-            <BrandMark className={styles.emblemMark} />
+            <BrandMark className={styles.emblemMark} px={88} />
             <div>
               <span className={styles.years} dir="ltr">{yearsOfExperience()}+</span>
               <span className={styles.yearsLabel}>{t.about.yearsLabel}</span>
