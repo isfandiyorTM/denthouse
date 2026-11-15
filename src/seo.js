@@ -3,6 +3,9 @@
 // Generated from src/data/* and src/i18n/*, injected at build time
 // (scripts/prerender.mjs) and in dev (vite.config.js).
 // Plain JS only (no JSX / CSS) — it is imported by vite.config.js.
+import fs from "node:fs";
+import path from "node:path";
+import crypto from "node:crypto";
 import { BUSINESS as B } from "./data/business.js";
 import { areasFor } from "./data/areas.js";
 import { VIDEOS } from "./data/videos.js";
@@ -12,7 +15,17 @@ import { HERO_SLIDES, SLIDE_SIZES, slideSrcSet } from "./data/heroSlides.js";
 
 const root = `${B.siteUrl}/`;
 const pageUrl = (lang) => `${B.siteUrl}${langInfo(lang).path}`;
-const image = absoluteUrl("/og-image.jpg");
+// The preview image URL carries a fingerprint of the file (?v=…), so when the image changes,
+// apps that cache link previews (WhatsApp, Telegram, Facebook) fetch the new one.
+const image = absoluteUrl(`/og-image.jpg${ogImageVersion()}`);
+function ogImageVersion() {
+  try {
+    const bytes = fs.readFileSync(path.resolve("public/og-image.jpg"));
+    return `?v=${crypto.createHash("sha1").update(bytes).digest("hex").slice(0, 8)}`;
+  } catch {
+    return "";
+  }
+}
 
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
