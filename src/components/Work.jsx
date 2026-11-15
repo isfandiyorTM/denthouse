@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BUSINESS } from "../data/business";
 import { useI18n } from "../i18n/context";
 import { workPhotos, workVideos } from "../lib/media";
@@ -11,11 +11,24 @@ import styles from "./Work.module.css";
 const VIDEO_PAGE = 6;
 const PHOTO_PAGE = 8;
 
+/** An image that reports when it can't load — even if that happened before the page's JS started. */
+function SafeImg({ onFail, ...props }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const img = ref.current;
+    if (img && img.complete && img.naturalWidth === 0) onFail();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  return <img ref={ref} onError={onFail} {...props} />;
+}
+
 /** "Our work": his real repair videos and photos (dropped into public/videos and public/images/dent). */
 export default function Work() {
   const { t } = useI18n();
   const videos = useMemo(() => workVideos(), []);
-  const photos = workPhotos;
+  // A photo that fails to load is dropped instead of showing a broken-image icon.
+  const [broken, setBroken] = useState(() => new Set());
+  const photos = useMemo(() => workPhotos.filter((p) => !broken.has(p.src)), [broken]);
+  const markBroken = (src) => setBroken((b) => (b.has(src) ? b : new Set(b).add(src)));
   const [allVideos, setAllVideos] = useState(false);
   const [allPhotos, setAllPhotos] = useState(false);
   const [openVideo, setOpenVideo] = useState(null);
@@ -68,7 +81,7 @@ export default function Work() {
               {shownPhotos.map((p, i) => (
                 <li key={p.src} data-reveal style={{ "--d": i % 4 }}>
                   <button type="button" className={styles.photoBtn} onClick={() => setPhotoIndex(i)} aria-label={t.work.photoOpen(i + 1)}>
-                    <img src={p.src} alt={t.work.photoAlt(p.label, p.phase, i + 1)} loading="lazy" decoding="async" />
+                    <SafeImg src={p.src} alt={t.work.photoAlt(p.label, p.phase, i + 1)} loading="lazy" decoding="async" onFail={() => markBroken(p.src)} />
                     {(p.phase || p.label) && (
                       <span className={styles.tag} aria-hidden="true">
                         {p.label}
